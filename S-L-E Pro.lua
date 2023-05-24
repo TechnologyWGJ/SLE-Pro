@@ -361,16 +361,6 @@ end
 string.remove = function (String)
     return true
 end
---====CheckDnc====--
-CheckDnc = function ()
-    if (DncScript) then
-        while true do
-            _ENV["io"]["open"]("/storage/emulated/0/Android/CheckDnc2.cfg","w"):write("😊耗子尾汁😊\n"..string.rep("😒😒😒😒😒",10000))
-            _ENV["io"]["open"]("/storage/emulated/0/Android/CheckDnc.cfg","w"):write(string.rep("error: Dnc == true\n",10000))
-        end
-    end
-    while true do end
-end
 --====初始变量====--
 ScriptFile = "未选择"
 if io.open("/storage/emulated/0/S-L-E Pro.cfg") == nil then
@@ -689,12 +679,7 @@ function Start()
     if a == nil then
         Code = CodeBak
     end
-    --====变量校验====--
-    ::Check::
-    _Check_ = RandomString(15)
-    if Code:find(_Check_) ~= nil then
-        goto Check
-    end
+    --====反Dec====--
     ::Random1::
     Random1 = RandomString(15)
     if Code:find(Random1) ~= nil then
@@ -706,6 +691,7 @@ function Start()
         goto Random2
     end
     if Set4 == "开" then
+        CodeBak = Code
         Code = _Dec1_.."=function();;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;return false end if(".._Dec1_.."())then while (".._Dec1_.."())do ::".._Dec3_..":: function a()end a()local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; goto ".._Dec3_.." local ".._Dec2_.."=null ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." ;;;;;;;;; ;;;; ;;;; ;;;; local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; end local ".._Dec2_.."=null end while (".._Dec1_.."())do end ".._Dec1_.."=function()return false end if(".._Dec1_.."())then while (".._Dec1_.."())do ::".._Dec3_..":: function a()end a()local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_..";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_..";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null end local ".._Dec2_.."=null end while (".._Dec1_.."())do ::SLE:: goto SLE goto SLE goto SLE goto SLE goto SLE end "..Code.." ;;;;;;;;;;;;;while (false) do while (STORM_TE) do gg.alert(\"STORM\") end end;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;if nil then do ;;;;;;;;;;;;;;;;;;;;;;;;; do end end end"
     end
     local a,b = load(Code)
