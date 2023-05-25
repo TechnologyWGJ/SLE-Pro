@@ -373,8 +373,8 @@ if io.open("/storage/emulated/0/.S-L-E Pro.cfg") == nil then
     Set4 = "关" --反Dec
     Set5 = "关" --反Log
     Set6 = "开" --防函数重写
-    Set7 = "开" --Lib加密
-    Set8 = "开" --Function加密
+    Set7 = "开" --内置函数加密
+    Set8 = "开" --自定义加密
     Set9 = "开" --指令校验
 
     local LogTable = {ScriptFileLog,"\n"..OutFileLog,"\n"..Set1,"\n"..Set2,"\n"..Set3,"\n"..Set4,"\n"..Set5,"\n"..Set6,"\n"..Set7,"\n"..Set8,"\n"..Set9}
@@ -476,35 +476,10 @@ function Start()
         gg.alert("字符串加密错误")
         Code = CodeBak
     end
-    --====Lib加密====
-    if Set7 == "开" then
-        CodeBak = Code
-        local LibTab = {
-            "gg",
-            "string",
-            "io",
-            "os",
-            "debug",
-            "math",
-            "table",
-            "utf8",
-            "bit32"
-        }
-        for k,v in pairs(LibTab) do
-            Code = Code:gsub(v.."%.","_ENV[\""..v.."\"]")
-        end
-        for w in Code:gmatch(".\"](.-)%(.") do
-            Code = Code:gsub(w,"[\""..w.."\"]")
-        end
-        local a,b = load(Code)
-        if a == nil then
-            gg.alert("Lib加密错误")
-            Code = CodeBak
-        end
-    end
     --====内置函数加密====--
     CodeBak = Code
-    local FuncTab = {
+    -- >> BaseLib
+    FuncTab = {
         "print",
         "load",
         "type",
@@ -565,12 +540,72 @@ function Start()
             Code = Code:gsub("\""..w.."\"",StringEnc(w))
         end
     end
+    -- >> GGLib
+    FuncTab = {
+        "gg.alert",
+        "gg.toast",
+    }
+    for k,v in pairs(FuncTab) do
+        Code = Code:gsub("%s"..v.."%("," _ENV[\""..v:gsub("%.","\"][\"").."\"](")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
+        Code = Code:gsub("%)"..v.."%(",")_ENV[\""..v:gsub("%.","\"][\"").."\"](")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
+        Code = Code:gsub("\""..v.."%(","\"_ENV[\""..v:gsub("%.","\"][\"").."\"](")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
+        Code = Code:gsub("\'"..v.."%(","\'_ENV[\""..v:gsub("%.","\"][\"").."\"](")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
+        Code = Code:gsub(";"..v.."%(",";_ENV[\""..v:gsub("%.","\"][\"").."\"](")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
+        Code = Code:gsub("%s"..v.."\""," _ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
+        Code = Code:gsub("%s"..v.."\'"," _ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
+        Code = Code:gsub("%)"..v.."\"",")_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
+        Code = Code:gsub("%)"..v.."\'",")_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
+        Code = Code:gsub("\""..v.."\"","\"_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
+        Code = Code:gsub("\'"..v.."\"","\"_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
+        Code = Code:gsub(";"..v.."\"",";_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
+        Code = Code:gsub(";"..v.."\'",";_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
+    end
+    FuncTab = nil
     local a,b = load(Code)
     if a == nil then
         gg.alert("内置函数加密错误")
         Code = CodeBak
     end
-    --====Function加密====--
+    --====自定义加密====--
     if Set8 == "开" then
         CodeBak = Code
         for w in Code:gmatch("function(.-)%(") do
@@ -582,7 +617,7 @@ function Start()
         ::FuncEncEnd::
         local a,b = load(Code)
         if a == nil then
-            gg.alert("Function加密错误")
+            gg.alert("自定义加密错误")
             Code = CodeBak
         end
     end
@@ -824,7 +859,7 @@ function Start()
         if Set7 == "开" then  G = "✔️" else  G = "❌" end
         if Set8 == "开" then  H = "✔️" else  H = "❌" end
         if Set9 == "开" then  I = "✔️" else  I = "❌" end
-        local F = gg.alert("加密成功\n\n输出位置:"..Out[2].."/"..Out[1]..Out[3].."\nOP混淆:"..A.."\nBool混淆:"..B.."\nNil混淆:"..C.."\n反Dec:"..D.."\n反Log:"..E.."\n防函数重写:"..F.."\nLib加密:"..G.."\nFunction加密:"..H.."\n反Lasm:"..I,"返回主页","","退出加密")
+        local F = gg.alert("加密成功\n\n输出位置:"..Out[2].."/"..Out[1]..Out[3].."\nOP混淆:"..A.."\nBool混淆:"..B.."\nNil混淆:"..C.."\n反Dec:"..D.."\n反Log:"..E.."\n防函数重写:"..F.."\n内置函数加密:"..G.."\n自定义加密:"..H.."\n反Lasm:"..I,"返回主页","","退出加密")
         if F == 1 then Main() else Exit() end
         Main()
     end
@@ -838,8 +873,8 @@ function Set()
     "反Dec["..Set4.."]",
     "反Log["..Set5.."]",
     "防函数重写["..Set6.."]",
-    "Lib加密["..Set7.."]",
-    "Function加密["..Set8.."]",
+    "内置函数加密["..Set7.."]",
+    "自定义加密["..Set8.."]",
     "反Lasm["..Set9.."]",
     "返回主页"
     },nil,"Storm-Lua-Enc Pro\n雨后总有彩虹🌈深夜总有繁星✨\n加密脚本:"..ScriptFile)
