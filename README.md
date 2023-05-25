@@ -6,3 +6,6 @@ GGLua Enc
 
 # V 6.3.0
   - 修复内置函数加密加密gg.toast,gg.alert,gg.setVisible的Bug
+  - 优化MSE算法
+  - 修复空格清理的Bug
+  - 将加密配置文件隐藏
