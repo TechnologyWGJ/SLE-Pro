@@ -512,10 +512,58 @@ function Start()
         "tonumber",
     }
     for k,v in pairs(FuncTab) do
-        Code = Code:gsub(v.."%(","_ENV[\""..v.."\"](")
-    end
-    for w in Code:gmatch("%[\"(.-)\"%]") do
-        Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        Code = Code:gsub("%s"..v.."%("," _ENV[\""..v.."\"](")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
+        Code = Code:gsub("%)"..v.."%(",")_ENV[\""..v.."\"](")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
+        Code = Code:gsub("\""..v.."%(","\"_ENV[\""..v.."\"](")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
+        Code = Code:gsub("\'"..v.."%(","\'_ENV[\""..v.."\"](")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
+        Code = Code:gsub(";"..v.."%(",";_ENV[\""..v.."\"](")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
+        Code = Code:gsub("%s"..v.."\""," _ENV[\""..v.."\"]\"")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
+        Code = Code:gsub("%s"..v.."\'"," _ENV[\""..v.."\"]\'")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
+        Code = Code:gsub("%)"..v.."\"",")_ENV[\""..v.."\"]\"")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
+        Code = Code:gsub("%)"..v.."\'",")_ENV[\""..v.."\"]\'")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
+        Code = Code:gsub("\""..v.."\"","\"_ENV[\""..v.."\"]\"")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
+        Code = Code:gsub("\'"..v.."\"","\"_ENV[\""..v.."\"]\'")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
+        Code = Code:gsub(";"..v.."\"",";_ENV[\""..v.."\"]\"")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
+        Code = Code:gsub(";"..v.."\'",";_ENV[\""..v.."\"]\'")
+        for w in Code:gmatch("%[\"(.-)\"%]") do
+            Code = Code:gsub("\""..w.."\"",StringEnc(w))
+        end
     end
     local a,b = load(Code)
     if a == nil then
