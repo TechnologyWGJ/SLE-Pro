@@ -1194,6 +1194,31 @@ function Start()
             Code = CodeBak
         end
     end
+    --====反Log====--
+    if Set5 == "开" then
+        CodeBak = Code
+        ::Content::
+        local Content = RandomString(15)
+        if Code:find(Content) ~= nil then
+            goto Content
+        end
+        ::Table::
+        local Table = RandomString(15)
+        if Code:find(Table) ~= nil then
+            goto Table
+        end
+        ::Random::
+        local Random = RandomString(15)
+        if Code:find(Random) ~= nil then
+            goto Random
+        end
+        Code = " local "..Content.."=string.rep(\" \",1048576) "..Table.."={} for i=1,1024 do "..Table.."[i]="..Content.." end for k,"..Random.." in pairs({_ENV[\"gg\"][\"alert\"],_ENV[\"gg\"][\"bytes\"],_ENV[\"gg\"][\"copyText\"],_ENV[\"gg\"][\"searchAddress\"],_ENV[\"gg\"][\"searchNumber\"],_ENV[\"toast\"]}) do pcall("..Random..","..Table..")end "..Content.."=nil local "..Content.."=string.rep(\"���\",999999) "..Table.."={} for "..Random.."=1,2048 do "..Table.."["..Random.."]="..Content.." end for k,v in pairs (string) do pcall(v,"..Table..") end "..Code
+    end
+    local a,b = load(Code)
+    if a == nil then
+        gg.alert("反Log错误")
+        Code = CodeBak
+    end
     --====指令校验====--
     if Set9 == "开" then
     --[[
@@ -1235,7 +1260,7 @@ function Start()
     end
     if Set4 == "开" then
         CodeBak = Code
-        Code = _Dec1_.."=function();;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;return false end if(".._Dec1_.."())then while (".._Dec1_.."())do;;;;;;; ::".._Dec3_..":: function a()end a()local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; goto ".._Dec3_.." local ".._Dec2_.."=null ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." ;;;;;;;;; ;;;; ;;;; ;;;; local ".._Dec2_.."=null; ; ; ; ; ; ;; ; ; ; ;  ; ;;;;;;;; goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; end local ".._Dec2_.."=null end while (".._Dec1_.."())do end ".._Dec1_.."=function()return false end if(".._Dec1_.."())then while (".._Dec1_.."())do ::".._Dec3_..":: function a()end a()local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_..";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_..";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null end local ".._Dec2_.."=null end while (".._Dec1_.."())do ::SLE:: goto SLE goto SLE goto SLE goto SLE goto SLE end "..Code.." ;;;;;;;;;;;;;while (false) do while (STORM_TE) do gg.alert(\"STORM\") end end;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;if nil then do ;;;;;;;;;;;;;;;;;;;;;;;;; do end end end"
+        Code = _Dec1_.."=function();;;;;;;;;;;;;;;;;;;;local A={{{{{{{{{{{}}}}}}}}}}};;;;;;;;;;;;;;;;;;;;;;;;;return 1==2 end if(".._Dec1_.."())then while (".._Dec1_.."())do;;;;;;; ::".._Dec3_..":: function a()end a()local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null;;;;;;;;;;;;;;;;;;local A={{{{{{{{{{{}}}}}}}}}}};;;;;;;;A=null;;;;;;;;;;;;;;;;;;;;;; goto ".._Dec3_.." local ".._Dec2_.."=null ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." ;;;;;;;;; ;;;; ;;;; ;;;; local ".._Dec2_.."=null; ; ; ; ; ; ;; ; ; ; ;  ; ;;;;;;;; goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null ;;;;;;;;;;;;;;;;;;;;;local A={{{{{{{{{{{}}}}}}}}}}};;;;;;;;;;;;;;;;; end local ".._Dec2_.."=null end while (".._Dec1_.."())do end ".._Dec1_.."=function()return false end if(".._Dec1_.."())then while (".._Dec1_.."())do ::".._Dec3_..":: function a()end a()local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_..";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null goto ".._Dec3_..";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; local ".._Dec2_.."=null goto ".._Dec3_.." local ".._Dec2_.."=null end local ".._Dec2_.."=null end while (".._Dec1_.."())do ::SLE:: goto SLE goto SLE goto SLE goto SLE goto SLE end "..Code.." ;;;;;;;;;;;;;while (false) do while (STORM_TE) do gg.alert(\"STORM\") end end;;;;;;;;;;;;;;;;;;;;local A={{{{{{{{{{{}}}}}}}}}}};A=null;;;;;;;;;;;;;;;;;;;;if nil then do ;;;;;;;;;;;;;;;;;;;;;;;;; do end end end"
     end
     local a,b = load(Code)
     if a == nil then
@@ -1266,9 +1291,9 @@ function Start()
     --====加密二进制====--)
     CodeBak = Code
     Code = Code:gsub(string.char(0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFA, 0xFA, 0xFA),string.char(0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFA, 0xFA, 0xFA))
-    Code = Code:gsub(string.char(0x01, 0x00, 0x00, 0x00, 0x1f, 0x00, 0x80, 0x00),string.char(0x00, 0x00, 0x00, 0x00), 1)
+    Code = Code:gsub(string.char(0x01, 0x00, 0x00, 0x00, 0x1f, 0x00, 0x80, 0x00),string.char(0x00, 0x00, 0x00,0x00), 1)
     Code = Code:gsub(string.char(0x04, 0x07, 0x00, 0x00, 0x00, 0x6C, 0x52, 0x6C, 0x52, 0x6C, 0x52, 0x00),string.char(0x04, 0x00, 0x00, 0x00, 0x00), 1)
-    Code = Code:gsub(string.char(0x04, 0x07, 0x00, 0x00, 0x00, 0x52, 0x6C, 0x52, 0x6C, 0x52, 0x6C),string.char(0x04, 0xE9, 0x03, 0x00, 0x00) .. string.rep(string.char(6), 1000))
+    Code = Code:gsub(string.char(0x04, 0x07, 0x00, 0x00, 0x00, 0x52, 0x6C, 0x52, 0x6C, 0x52, 0x6C),string.char(0x04, 0xE9, 0x03, 0x00, 0x00)..string.rep(string.char(6), 1000))
     Code = Code:gsub(string.char(0x04, 0x07, 0x00, 0x00, 0x00, 0x52, 0x6C, 0x52, 0x6C, 0x52, 0x52),string.char(0x04, 0x11, 0x27, 0x00, 0x00) .. string.rep(string.char(6), 10000))
     local a,b = load(Code)
     if a == nil then
