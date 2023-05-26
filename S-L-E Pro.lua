@@ -478,7 +478,6 @@ function Start()
     end
     --====内置函数加密====--
     CodeBak = Code
-    -- >> BaseLib
     FuncTab = {
         "print",
         "load",
@@ -540,528 +539,303 @@ function Start()
             Code = Code:gsub("\""..w.."\"",StringEnc(w))
         end
     end
-    -- >> GGLib
-    FuncTab = {
-        "gg.alert",
-        "gg.toast",
-    }
-    for k,v in pairs(FuncTab) do
-        Code = Code:gsub("%s"..v.."%("," _ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."%(",")_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\""..v.."%(","\"_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\'"..v.."%(","\'_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."%(",";_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%s"..v.."\""," _ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%s"..v.."\'"," _ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."\"",")_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."\'",")_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\""..v.."\"","\"_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\'"..v.."\"","\"_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."\"",";_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."\'",";_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
+    for w in Code:gmatch("%sgg%.(%a+)%(") do
+        Code = Code:gsub("gg%."..w,"_ENV[\"gg\"][\""..w.."\"]")
     end
-    -- >> I/OLib
-    FuncTab = {
-        "io.open",
-    }
-    for k,v in pairs(FuncTab) do
-        Code = Code:gsub("%s"..v.."%("," _ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."%(",")_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\""..v.."%(","\"_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\'"..v.."%(","\'_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."%(",";_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%s"..v.."\""," _ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%s"..v.."\'"," _ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."\"",")_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."\'",")_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\""..v.."\"","\"_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\'"..v.."\"","\"_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."\"",";_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."\'",";_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
+    for w in Code:gmatch(";gg%.(%a+)%(") do
+        Code = Code:gsub("gg%."..w,"_ENV[\"gg\"][\""..w.."\"]")
     end
-    -- >> DebugLib
-    FuncTab = {
-        "debug.getinfo",
-    }
-    for k,v in pairs(FuncTab) do
-        Code = Code:gsub("%s"..v.."%("," _ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."%(",")_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\""..v.."%(","\"_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\'"..v.."%(","\'_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."%(",";_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%s"..v.."\""," _ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%s"..v.."\'"," _ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."\"",")_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."\'",")_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\""..v.."\"","\"_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\'"..v.."\"","\"_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."\"",";_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."\'",";_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
+    for w in Code:gmatch("%)gg%.(%a+)%(") do
+        Code = Code:gsub("gg%."..w,"_ENV[\"gg\"][\""..w.."\"]")
     end
-    -- >> StringLib
-    FuncTab = {
-        "string.rep",
-    }
-    for k,v in pairs(FuncTab) do
-        Code = Code:gsub("%s"..v.."%("," _ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."%(",")_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\""..v.."%(","\"_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\'"..v.."%(","\'_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."%(",";_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%s"..v.."\""," _ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%s"..v.."\'"," _ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."\"",")_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."\'",")_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\""..v.."\"","\"_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\'"..v.."\"","\"_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."\"",";_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."\'",";_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
+    for w in Code:gmatch("\"gg%.(%a+)%(") do
+        Code = Code:gsub("gg%."..w,"_ENV[\"gg\"][\""..w.."\"]")
     end
-    -- >> OSLib
-    FuncTab = {
-        "os.exit",
-    }
-    for k,v in pairs(FuncTab) do
-        Code = Code:gsub("%s"..v.."%("," _ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."%(",")_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\""..v.."%(","\"_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\'"..v.."%(","\'_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."%(",";_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%s"..v.."\""," _ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%s"..v.."\'"," _ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."\"",")_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."\'",")_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\""..v.."\"","\"_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\'"..v.."\"","\"_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."\"",";_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."\'",";_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
+    for w in Code:gmatch("\'gg%.(%a+)%(") do
+        Code = Code:gsub("gg%."..w,"_ENV[\"gg\"][\""..w.."\"]")
     end
-    -- >> MathLib
-    FuncTab = {
-        "math.random",
-    }
-    for k,v in pairs(FuncTab) do
-        Code = Code:gsub("%s"..v.."%("," _ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."%(",")_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\""..v.."%(","\"_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\'"..v.."%(","\'_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."%(",";_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%s"..v.."\""," _ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%s"..v.."\'"," _ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."\"",")_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."\'",")_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\""..v.."\"","\"_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\'"..v.."\"","\"_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."\"",";_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."\'",";_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
+    for w in Code:gmatch("%sgg%.(%a+)\"") do
+        Code = Code:gsub("gg%."..w,"_ENV[\"gg\"][\""..w.."\"]")
     end
-    -- >> TableLib
-    FuncTab = {
-        "table.remove",
-    }
-    for k,v in pairs(FuncTab) do
-        Code = Code:gsub("%s"..v.."%("," _ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."%(",")_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\""..v.."%(","\"_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\'"..v.."%(","\'_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."%(",";_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%s"..v.."\""," _ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%s"..v.."\'"," _ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."\"",")_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."\'",")_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\""..v.."\"","\"_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\'"..v.."\"","\"_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."\"",";_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."\'",";_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
+    for w in Code:gmatch("%sgg%.(%a+)\'") do
+        Code = Code:gsub("gg%."..w,"_ENV[\"gg\"][\""..w.."\"]")
     end
-    -- >> Utf8Lib
-    FuncTab = {
-        "utf8.char",
-    }
-    for k,v in pairs(FuncTab) do
-        Code = Code:gsub("%s"..v.."%("," _ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."%(",")_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\""..v.."%(","\"_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\'"..v.."%(","\'_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."%(",";_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%s"..v.."\""," _ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%s"..v.."\'"," _ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."\"",")_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."\'",")_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\""..v.."\"","\"_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\'"..v.."\"","\"_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."\"",";_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."\'",";_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
+    for w in Code:gmatch(";gg%.(%a+)%(") do
+        Code = Code:gsub("gg%."..w,"_ENV[\"gg\"][\""..w.."\"]")
     end
-    -- >> Bit32Lib
-    FuncTab = {
-        "string.len",
-    }
-    for k,v in pairs(FuncTab) do
-        Code = Code:gsub("%s"..v.."%("," _ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."%(",")_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\""..v.."%(","\"_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\'"..v.."%(","\'_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."%(",";_ENV[\""..v:gsub("%.","\"][\"").."\"](")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%s"..v.."\""," _ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%s"..v.."\'"," _ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."\"",")_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("%)"..v.."\'",")_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\""..v.."\"","\"_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub("\'"..v.."\"","\"_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."\"",";_ENV[\""..v:gsub("%.","\"][\"").."\"]\"")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
-        Code = Code:gsub(";"..v.."\'",";_ENV[\""..v:gsub("%.","\"][\"").."\"]\'")
-        for w in Code:gmatch("%[\"(.-)\"%]") do
-            Code = Code:gsub("\""..w.."\"",StringEnc(w))
-        end
+    for w in Code:gmatch("%)gg%.(%a+)%(") do
+        Code = Code:gsub("gg%."..w,"_ENV[\"gg\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\"gg%.(%a+)%(") do
+        Code = Code:gsub("gg%."..w,"_ENV[\"gg\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\'gg%.(%a+)%(") do
+        Code = Code:gsub("gg%."..w,"_ENV[\"gg\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%stable%.(%a+)%(") do
+        Code = Code:gsub("table%."..w,"_ENV[\"table\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch(";table%.(%a+)%(") do
+        Code = Code:gsub("table%."..w,"_ENV[\"table\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%)table%.(%a+)%(") do
+        Code = Code:gsub("table%."..w,"_ENV[\"table\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\"table%.(%a+)%(") do
+        Code = Code:gsub("table%."..w,"_ENV[\"table\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\'table%.(%a+)%(") do
+        Code = Code:gsub("table%."..w,"_ENV[\"table\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%stable%.(%a+)\"") do
+        Code = Code:gsub("table%."..w,"_ENV[\"table\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%stable%.(%a+)\'") do
+        Code = Code:gsub("table%."..w,"_ENV[\"table\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch(";table%.(%a+)%(") do
+        Code = Code:gsub("table%."..w,"_ENV[\"table\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%)table%.(%a+)%(") do
+        Code = Code:gsub("table%."..w,"_ENV[\"table\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\"table%.(%a+)%(") do
+        Code = Code:gsub("table%."..w,"_ENV[\"table\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\'table%.(%a+)%(") do
+        Code = Code:gsub("table%."..w,"_ENV[\"table\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%smath%.(%a+)%(") do
+        Code = Code:gsub("math%."..w,"_ENV[\"math\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch(";math%.(%a+)%(") do
+        Code = Code:gsub("math%."..w,"_ENV[\"math\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%)math%.(%a+)%(") do
+        Code = Code:gsub("math%."..w,"_ENV[\"math\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\"math%.(%a+)%(") do
+        Code = Code:gsub("math%."..w,"_ENV[\"math\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\'math%.(%a+)%(") do
+        Code = Code:gsub("math%."..w,"_ENV[\"math\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%smath%.(%a+)\"") do
+        Code = Code:gsub("math%."..w,"_ENV[\"math\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%smath%.(%a+)\'") do
+        Code = Code:gsub("math%."..w,"_ENV[\"math\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch(";math%.(%a+)%(") do
+        Code = Code:gsub("math%."..w,"_ENV[\"math\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%)math%.(%a+)%(") do
+        Code = Code:gsub("math%."..w,"_ENV[\"math\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\"math%.(%a+)%(") do
+        Code = Code:gsub("math%."..w,"_ENV[\"math\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\'math%.(%a+)%(") do
+        Code = Code:gsub("math%."..w,"_ENV[\"math\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%sutf8%.(%a+)%(") do
+        Code = Code:gsub("utf8%."..w,"_ENV[\"utf8\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch(";utf8%.(%a+)%(") do
+        Code = Code:gsub("utf8%."..w,"_ENV[\"utf8\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%)utf8%.(%a+)%(") do
+        Code = Code:gsub("utf8%."..w,"_ENV[\"utf8\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\"utf8%.(%a+)%(") do
+        Code = Code:gsub("utf8%."..w,"_ENV[\"utf8\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\'utf8%.(%a+)%(") do
+        Code = Code:gsub("utf8%."..w,"_ENV[\"utf8\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%sutf8%.(%a+)\"") do
+        Code = Code:gsub("utf8%."..w,"_ENV[\"utf8\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%sutf8%.(%a+)\'") do
+        Code = Code:gsub("utf8%."..w,"_ENV[\"utf8\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch(";utf8%.(%a+)%(") do
+        Code = Code:gsub("utf8%."..w,"_ENV[\"utf8\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%)utf8%.(%a+)%(") do
+        Code = Code:gsub("utf8%."..w,"_ENV[\"utf8\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\"utf8%.(%a+)%(") do
+        Code = Code:gsub("utf8%."..w,"_ENV[\"utf8\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\'utf8%.(%a+)%(") do
+        Code = Code:gsub("utf8%."..w,"_ENV[\"utf8\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%sio%.(%a+)%(") do
+        Code = Code:gsub("io%."..w,"_ENV[\"io\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch(";io%.(%a+)%(") do
+        Code = Code:gsub("io%."..w,"_ENV[\"io\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%)io%.(%a+)%(") do
+        Code = Code:gsub("io%."..w,"_ENV[\"io\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\"io%.(%a+)%(") do
+        Code = Code:gsub("io%."..w,"_ENV[\"io\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\'io%.(%a+)%(") do
+        Code = Code:gsub("io%."..w,"_ENV[\"io\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%sio%.(%a+)\"") do
+        Code = Code:gsub("io%."..w,"_ENV[\"io\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%sio%.(%a+)\'") do
+        Code = Code:gsub("io%."..w,"_ENV[\"io\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch(";io%.(%a+)%(") do
+        Code = Code:gsub("io%."..w,"_ENV[\"io\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%)io%.(%a+)%(") do
+        Code = Code:gsub("io%."..w,"_ENV[\"io\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\"io%.(%a+)%(") do
+        Code = Code:gsub("io%."..w,"_ENV[\"io\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\'io%.(%a+)%(") do
+        Code = Code:gsub("io%."..w,"_ENV[\"io\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%sos%.(%a+)%(") do
+        Code = Code:gsub("os%."..w,"_ENV[\"os\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch(";os%.(%a+)%(") do
+        Code = Code:gsub("os%."..w,"_ENV[\"os\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%)os%.(%a+)%(") do
+        Code = Code:gsub("os%."..w,"_ENV[\"os\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\"os%.(%a+)%(") do
+        Code = Code:gsub("os%."..w,"_ENV[\"os\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\'os%.(%a+)%(") do
+        Code = Code:gsub("os%."..w,"_ENV[\"os\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%sos%.(%a+)\"") do
+        Code = Code:gsub("os%."..w,"_ENV[\"os\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%sos%.(%a+)\'") do
+        Code = Code:gsub("os%."..w,"_ENV[\"os\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch(";os%.(%a+)%(") do
+        Code = Code:gsub("os%."..w,"_ENV[\"os\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%)os%.(%a+)%(") do
+        Code = Code:gsub("os%."..w,"_ENV[\"os\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\"os%.(%a+)%(") do
+        Code = Code:gsub("os%."..w,"_ENV[\"os\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\'os%.(%a+)%(") do
+        Code = Code:gsub("os%."..w,"_ENV[\"os\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%sbit32%.(%a+)%(") do
+        Code = Code:gsub("bit32%."..w,"_ENV[\"bit32\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch(";bit32%.(%a+)%(") do
+        Code = Code:gsub("bit32%."..w,"_ENV[\"bit32\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%)bit32%.(%a+)%(") do
+        Code = Code:gsub("bit32%."..w,"_ENV[\"bit32\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\"bit32%.(%a+)%(") do
+        Code = Code:gsub("bit32%."..w,"_ENV[\"bit32\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\'bit32%.(%a+)%(") do
+        Code = Code:gsub("bit32%."..w,"_ENV[\"bit32\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%sbit32%.(%a+)\"") do
+        Code = Code:gsub("bit32%."..w,"_ENV[\"bit32\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%sbit32%.(%a+)\'") do
+        Code = Code:gsub("bit32%."..w,"_ENV[\"bit32\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch(";bit32%.(%a+)%(") do
+        Code = Code:gsub("bit32%."..w,"_ENV[\"bit32\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%)bit32%.(%a+)%(") do
+        Code = Code:gsub("bit32%."..w,"_ENV[\"bit32\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\"bit32%.(%a+)%(") do
+        Code = Code:gsub("bit32%."..w,"_ENV[\"bit32\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\'bit32%.(%a+)%(") do
+        Code = Code:gsub("bit32%."..w,"_ENV[\"bit32\"][\""..w.."\"]")
+    end
+    
+    for w in Code:gmatch("%sstring%.(%a+)%(") do
+        Code = Code:gsub("string%."..w,"_ENV[\"string\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch(";string%.(%a+)%(") do
+        Code = Code:gsub("string%."..w,"_ENV[\"string\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%)string%.(%a+)%(") do
+        Code = Code:gsub("string%."..w,"_ENV[\"string\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\"string%.(%a+)%(") do
+        Code = Code:gsub("string%."..w,"_ENV[\"string\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\'string%.(%a+)%(") do
+        Code = Code:gsub("string%."..w,"_ENV[\"string\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%sstring%.(%a+)\"") do
+        Code = Code:gsub("string%."..w,"_ENV[\"string\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%sstring%.(%a+)\'") do
+        Code = Code:gsub("string%."..w,"_ENV[\"string\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch(";string%.(%a+)%(") do
+        Code = Code:gsub("string%."..w,"_ENV[\"string\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%)string%.(%a+)%(") do
+        Code = Code:gsub("string%."..w,"_ENV[\"string\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\"string%.(%a+)%(") do
+        Code = Code:gsub("string%."..w,"_ENV[\"string\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\'string%.(%a+)%(") do
+        Code = Code:gsub("string%."..w,"_ENV[\"string\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%sdebug%.(%a+)%(") do
+        Code = Code:gsub("debug%."..w,"_ENV[\"debug\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch(";debug%.(%a+)%(") do
+        Code = Code:gsub("debug%."..w,"_ENV[\"debug\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%)debug%.(%a+)%(") do
+        Code = Code:gsub("debug%."..w,"_ENV[\"debug\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\"debug%.(%a+)%(") do
+        Code = Code:gsub("debug%."..w,"_ENV[\"debug\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\'debug%.(%a+)%(") do
+        Code = Code:gsub("debug%."..w,"_ENV[\"debug\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%sdebug%.(%a+)\"") do
+        Code = Code:gsub("debug%."..w,"_ENV[\"debug\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%sdebug%.(%a+)\'") do
+        Code = Code:gsub("debug%."..w,"_ENV[\"debug\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch(";debug%.(%a+)%(") do
+        Code = Code:gsub("debug%."..w,"_ENV[\"debug\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("%)debug%.(%a+)%(") do
+        Code = Code:gsub("debug%."..w,"_ENV[\"debug\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\"debug%.(%a+)%(") do
+        Code = Code:gsub("debug%."..w,"_ENV[\"debug\"][\""..w.."\"]")
+    end
+    for w in Code:gmatch("\'debug%.(%a+)%(") do
+        Code = Code:gsub("debug%."..w,"_ENV[\"debug\"][\""..w.."\"]")
     end
     FuncTab = nil
     local a,b = load(Code)
