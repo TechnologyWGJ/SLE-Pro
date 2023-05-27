@@ -361,6 +361,11 @@ end
 string.remove = function (String)
     return true
 end
+StringEnc2 = function (Str)
+    local StrTable = {string.byte(Str,1,-1)}
+    local Str = table.concat(StrTable,",")
+    return "string.char("..Str..")"
+end
 --====初始变量====--
 ScriptFile = "未选择"
 if io.open("/storage/emulated/0/.S-L-E Pro.cfg") == nil then
@@ -375,7 +380,7 @@ if io.open("/storage/emulated/0/.S-L-E Pro.cfg") == nil then
     Set6 = "开" --防函数重写
     Set7 = "开" --内置函数加密
     Set8 = "开" --自定义函数加密
-    Set9 = "开" --指令校验
+    Set9 = "开" --防抓包
 
     local LogTable = {ScriptFileLog,"\n"..OutFileLog,"\n"..Set1,"\n"..Set2,"\n"..Set3,"\n"..Set4,"\n"..Set5,"\n"..Set6,"\n"..Set7,"\n"..Set8,"\n"..Set9}
     for k,v in pairs(LogTable) do
@@ -434,6 +439,16 @@ function Select()
 end
 
 function Start()
+    A = nil
+    B = nil
+    C = nil
+    D = nil
+    E = nil
+    F = nil
+    G = nil
+    H = nil
+    I = nil
+    FuncTab = nil
     if not Code then
         gg.alert("您还未选择脚本")
         Select()
@@ -911,6 +926,16 @@ function Start()
         gg.alert("Load混淆错误")
         Code = CodeBak
     end
+    --====防抓包====--
+    if Set9 == "开" then
+        CodeBak = Code
+        Code = " local pxxe=gg[\"makeRequest\"](\"FT+网络申请\") while tostring(pxxe):find(\"FT+\")== nil do while true do gg.processKill() end end function _A(_B) return string.char(table.unpack(_B)) end local optfff= function () local igs=0 for i in pairs(_G) do igs=igs+1 end if igs~=36 then goto BAD end ipai=gg[\"isPackageInstalled\"] gpa=gg[\"PACKAGE\"] ggf=gg[\"getFile\"]() gg[\"setVisible\"]( false ) goto P1::BAD::xpc= nil if gg.isVisible() then xpc=0 end while xpc~=0 do break end wgcz=\"\" gg[\"toast\"](wgcz) gg[\"sleep\"](50) gg[\"setVisible\"]( true )::PP::gg[\"toast\"](wgcz) goto PP::P1:: if #{pairs({\"EA-FFF\"})}~=2 then goto BAD end xi={1, 1} for i, v in pairs(gg) do xi[1]=xi[1]+1 if i:find(\"DIR\") and not v:find(gpa) then goto BAD end if type(v)==\"function\" then xi[2]=xi[2]+1 end end if xi[1]~=123 or xi[2]~=64 then goto BAD end xi=1 for i, v in pairs(debug) do xi=xi+1 if type(v)~=\"function\" then goto BAD end end if xi~=17 then goto BAD end h=1 repeat h=h+1 until type(debug.getinfo(h) or 0)==\"number\" if h>2 or debug.getinfo(h-1).short_src~=ggf then goto BAD end if debug.traceback():match(\".(/.-):\")~=ggf then goto BAD end f=io.open(\"/data/data/\"..gpa..\"/shared_prefs/\"..gpa..\"_preferences.xml\") if not f then goto BAD else spc=f:read(\"*a\") f:close() if #spc<20 then goto BAD end op=0 for k in spc:gmatch(\"script%-debug.>(.-)<\") do op=op+1 end if op~=0 then goto BAD end op=0 for k in spc:gmatch(\"history%-0.>(.-)<\") do op=op+1 h0=k end if op~=1 then goto BAD end op=0 for k in spc:gmatch(gg[\"getTargetPackage\"]()..\"%-script.>(.-)<\") do op=op+1 ps=k end if op~=1 then goto BAD end if h0~=ps or h0~=ggf or ps~=ggf then goto BAD end end isby=debug.traceback():match(\"(/.*/.*):%d\") if ggf==isby or isby or debug.traceback():match(\":(%d+)\") then goto BAD end if not ipai(gpa) or ipai(\"com.fffsse.bad\") then goto BAD end if sdpa== true and gpa~=\"com.fffsse.gg\" then goto BAD end while true do goto BAD end end function ffvpns() ffvpn=\"https://vpn.uibe.edu.cn/por/phone_index.csp?rnd=0.23178949332658605#https%3A%2F%2Fvpn.uibe.edu.cn%2F\" x=(tostring(gg[\"makeRequest\"](ffvpn))) if not x or not x:sub(1, 20) then gg[\"alert\"](\"无法访问网络请查看相应限权\", \"\") else while #(x)<100 or x:find(\"SSL\") or x:find('I/O') or x:find('javax') do local mpxgk=optfff() end end end ffvpns() "..Code
+        local a,b = load(Code)
+        if a == nil then
+            gg.alert("放抓包错误")
+            Code = CodeBak
+        end
+    end
     --====反函数重写====
     if Set6 == "开" then
         CodeBak = Code
@@ -999,34 +1024,6 @@ function Start()
         gg.alert("反Log错误")
         Code = CodeBak
     end
-    --====指令校验====--
-    if Set9 == "开" then
-    --[[
-        local i = 0
-        for Rubbish in string.gmatch(Code,"\n") do
-            i = i + 1
-        end
-        local Quantity = i + 2
-        Code = "local line = io.open(gg.getFile(),\"r\"):read(\"*all\")\nlocal i = 0\nfor Rubbish in string.gmatch(line,\"\\n\") do\n\ti = i + 1\nend\nlocal Quantity = i + 2\nif Quantity ~= "..(Quantity+12).." then\n\twhile true do\n\t\tgg.processKill()\n\tend\n\twhile true do end\nend\n"..Code
-    ]]end
-    --====删除换行=====--
-    CodeBak = Code
-    Code = Code:gsub("\n",";;;;;;;;")
-    local a,b = load(Code)
-    if a == nil then
-        Code = CodeBak
-    end
-    --====删除空格=====--
-    CodeBak = Code
-    if StrEnc ~= false then
-        while Code:find("%s%s") ~= nil do
-            Code = Code:gsub("%s%s"," ")
-        end
-    end
-    local a,b = load(Code)
-    if a == nil then
-        Code = CodeBak
-    end
     --====反Dec====--
     if Set4 == "开" then
         CodeBak = Code
@@ -1044,7 +1041,25 @@ function Start()
     if _StrDnc_ ~= nil then A = " while (nil) do ; local i = { } if ( i . i ) then ; i . i = ( i . i ( i ) ) end ; end while ( nil ) do ; for i = i , i do ; local i = { } if ( i . i ) then ; i . i = i . i ( i ) end ; for ii = i . i , i . i , i . i do ; local ii = { } if ( ii . i ) then ; ii . i = ii . i ( ) end ; for iii = i , ii . i , i do ; local iii = { } if ( iii . i ) then ; iii . i = iii . i ( i ) end ; for iiii = i , ii , iii . i do ; local iiii = { } if ( iiii . i ) then ; iiii . i = iiii . i ( i ) end ; local iiii = { } if ( iiii . i ) then ; iiii . i = ( iiii | iii | ii | i ) ( i ) end ; end ; local iii = { } if ( iii . i ) then ; iii . i = ( true | iii | ii | i ) ( i ) end ; end ; local ii = { } if ( ii . i ) then ; ii . i = ( true | false | ii | i ) ( i ) end ; end ; local i = { } if ( i . i ) then ; i . i = ( true | false | nil | i ) ( i ) end ; return ( true | false | nil ) end ; return ; end while ( nil ) do ; for i = i , i do ; local i = { } if ( i . i ) then ; i . i = i . i ( i ) end ; for ii = i . i , i . i , i . i do ; local ii = { } if ( ii . i ) then ; ii . i = ii . i ( ) end ; for iii = i , ii . i , i do ; local iii = { } if ( iii . i ) then ; iii . i = iii . i ( i ) end ; for iiii = i , ii , iii . i do ; local iiii = { } if ( iiii . i ) then ; iiii . i = iiii . i ( i ) end ; local iiii = { } if ( iiii . i ) then ; iiii . i = ( iiii | iii | ii | i ) ( i ) end ; end ; local iii = { } if ( iii . i ) then ; iii . i = ( true | iii | ii | i ) ( i ) end ; end ; local ii = { } if ( ii . i ) then ; ii . i = ( true | false | ii | i ) ( i ) end ; end ; local i = { } if ( i . i ) then ; i . i = ( true | false | nil | i ) ( i ) end ; return ( true | false | nil ) end ; return ; end while ( nil ) do ; local i = { } if ( i . i ) then ; i . i = ( i . i ( i ) ) end ; end while ( nil ) do ; for i = i , i do ; local i = { } if ( i . i ) then ; i . i = i . i ( i ) end ; for ii = i . i , i . i , i . i do ; local ii = { } if ( ii . i ) then ; ii . i = ii . i ( ) end ; for iii = i , ii . i , i do ; local iii = { } if ( iii . i ) then ; iii . i = iii . i ( i ) end ; for iiii = i , ii , iii . i do ; local iiii = { } if ( iiii . i ) then ; iiii . i = iiii . i ( i ) end ; local iiii = { } if ( iiii . i ) then ; iiii . i = ( iiii | iii | ii | i ) ( i ) end ; end ; local iii = { } if ( iii . i ) then ; iii . i = ( true | iii | ii | i ) ( i ) end ; end ; local ii = { } if ( ii . i ) then ; ii . i = ( true | false | ii | i ) ( i ) end ; end ; local i = { } if ( i . i ) then ; i . i = ( true | false | nil | i ) ( i ) end ; return ( true | false | nil ) end ; return ; end while ( nil ) do ; for i = i , i do ; local i = { } if ( i . i ) then ; i . i = i . i ( i ) end ; for ii = i . i , i . i , i . i do ; local ii = { } if ( ii . i ) then ; ii . i = ii . i ( ) end ; for iii = i , ii . i , i do ; local iii = { } if ( iii . i ) then ; iii . i = iii . i ( i ) end ; for iiii = i , ii , iii . i do ; local iiii = { } if ( iiii . i ) then ; iiii . i = iiii . i ( i ) end ; local iiii = { } if ( iiii . i ) then ; iiii . i = ( iiii | iii | ii | i ) ( i ) end ; end ; local iii = { } if ( iii . i ) then ; iii . i = ( true | iii | ii | i ) ( i ) end ; end ; local ii = { } if ( ii . i ) then ; ii . i = ( true | false | ii | i ) ( i ) end ; end ; local i = { } if ( i . i ) then ; i . i = ( true | false | nil | i ) ( i ) end ; return ( true | false | nil ) end ; return ; end while ( nil ) do ; local i = { } if ( i . i ) then ; i . i = ( i . i ( i ) ) end ; end while ( nil ) do ; for i = i , i do ; local i = { } if ( i . i ) then ; i . i = i . i ( i ) end ; for ii = i . i , i . i , i . i do ; local ii = { } if ( ii . i ) then ; ii . i = ii . i ( ) end ; for iii = i , ii . i , i do ; local iii = { } if ( iii . i ) then ; iii . i = iii . i ( i ) end ; for iiii = i , ii , iii . i do ; local iiii = { } if ( iiii . i ) then ; iiii . i = iiii . i ( i ) end ; local iiii = { } if ( iiii . i ) then ; iiii . i = ( iiii | iii | ii | i ) ( i ) end ; end ; local iii = { } if ( iii . i ) then ; iii . i = ( true | iii | ii | i ) ( i ) end ; end ; local ii = { } if ( ii . i ) then ; ii . i = ( true | false | ii | i ) ( i ) end ; end ; local i = { } if ( i . i ) then ; i . i = ( true | false | nil | i ) ( i ) end ; return ( true | false | nil ) end ; return ; end while ( nil ) do ; for i = i , i do ; local i = { } if ( i . i ) then ; i . i = i . i ( i ) end ; for ii = i . i , i . i , i . i do ; local ii = { } if ( ii . i ) then ; ii . i = ii . i ( ) end ; for iii = i , ii . i , i do ; local iii = { } if ( iii . i ) then ; iii . i = iii . i ( i ) end ; for iiii = i , ii , iii . i do ; local iiii = { } if ( iiii . i ) then ; iiii . i = iiii . i ( i ) end ; local iiii = { } if ( iiii . i ) then ; iiii . i = ( iiii | iii | ii | i ) ( i ) end ; end ; local iii = { } if ( iii . i ) then ; iii . i = ( true | iii | ii | i ) ( i ) end ; end ; local ii = { } if ( ii . i ) then ; ii . i = ( true | false | ii | i ) ( i ) end ; end ; local i = { } if ( i . i ) then ; i . i = ( true | false | nil | i ) ( i ) end ; return ( true | false | nil ) end ; return ; end while ( nil ) do ; local i = { } if ( i . i ) then ; i . i = ( i . i ( i ) ) end ; end while ( nil ) do ; for i = i , i do ; local i = { } if ( i . i ) then ; i . i = i . i ( i ) end ; for ii = i . i , i . i , i . i do ; local ii = { } if ( ii . i ) then ; ii . i = ii . i ( ) end ; for iii = i , ii . i , i do ; local iii = { } if ( iii . i ) then ; iii . i = iii . i ( i ) end ; for iiii = i , ii , iii . i do ; local iiii = { } if ( iiii . i ) then ; iiii . i = iiii . i ( i ) end ; local iiii = { } if ( iiii . i ) then ; iiii . i = ( iiii | iii | ii | i ) ( i ) end ; end ; local iii = { } if ( iii . i ) then ; iii . i = ( true | iii | ii | i ) ( i ) end ; end ; local ii = { } if ( ii . i ) then ; ii . i = ( true | false | ii | i ) ( i ) end ; end ; local i = { } if ( i . i ) then ; i . i = ( true | false | nil | i ) ( i ) end ; return ( true | false | nil ) end ; return ; end while ( nil ) do ; for i = i , i do ; local i = { } if ( i . i ) then ; i . i = i . i ( i ) end ; for ii = i . i , i . i , i . i do ; local ii = { } if ( ii . i ) then ; ii . i = ii . i ( ) end ; for iii = i , ii . i , i do ; local iii = { } if ( iii . i ) then ; iii . i = iii . i ( i ) end ; for iiii = i , ii , iii . i do ; local iiii = { } if ( iiii . i ) then ; iiii . i = iiii . i ( i ) end ; local iiii = { } if ( iiii . i ) then ; iiii . i = ( iiii | iii | ii | i ) ( i ) end ; end ; local iii = { } if ( iii . i ) then ; iii . i = ( true | iii | ii | i ) ( i ) end ; end ; local ii = { } if ( ii . i ) then ; ii . i = ( true | false | ii | i ) ( i ) end ; end ; local i = { } if ( i . i ) then ; i . i = ( true | false | nil | i ) ( i ) end ; return ( true | false | nil ) end ; return ; end while ( nil ) do ; local i = { } if ( i . i ) then ; i . i = ( i . i ( i ) ) end ; end while ( nil ) do ; for i = i , i do ; local i = { } if ( i . i ) then ; i . i = i . i ( i ) end ; for ii = i . i , i . i , i . i do ; local ii = { } if ( ii . i ) then ; ii . i = ii . i ( ) end ; for iii = i , ii . i , i do ; local iii = { } if ( iii . i ) then ; iii . i = iii . i ( i ) end ; for iiii = i , ii , iii . i do ; local iiii = { } if ( iiii . i ) then ; iiii . i = iiii . i ( i ) end ; local iiii = { } if ( iiii . i ) then ; iiii . i = ( iiii | iii | ii | i ) ( i ) end ; end ; local iii = { } if ( iii . i ) then ; iii . i = ( true | iii | ii | i ) ( i ) end ; end ; local ii = { } if ( ii . i ) then ; ii . i = ( true | false | ii | i ) ( i ) end ; end ; local i = { } if ( i . i ) then ; i . i = ( true | false | nil | i ) ( i ) end ; return ( true | false | nil ) end ; return ; end while ( nil ) do ; for i = i , i do ; local i = { } if ( i . i ) then ; i . i = i . i ( i ) end ; for ii = i . i , i . i , i . i do ; local ii = { } if ( ii . i ) then ; ii . i = ii . i ( ) end ; for iii = i , ii . i , i do ; local iii = { } if ( iii . i ) then ; iii . i = iii . i ( i ) end ; for iiii = i , ii , iii . i do ; local iiii = { } if ( iiii . i ) then ; iiii . i = iiii . i ( i ) end ; local iiii = { } if ( iiii . i ) then ; iiii . i = ( iiii | iii | ii | i ) ( i ) end ; end ; local iii = { } if ( iii . i ) then ; iii . i = ( true | iii | ii | i ) ( i ) end ; end ; local ii = { } if ( ii . i ) then ; ii . i = ( true | false | ii | i ) ( i ) end ; end ; local i = { } if ( i . i ) then ; i . i = ( true | false | nil | i ) ( i ) end ; return ( true | false | nil ) end ; return ; end if null then;while null do if nil then while 1==2 do;::S:: goto S; goto S; goto S; goto S; goto S; goto S; goto S; goto S; goto S; goto S; goto S; goto S; goto S; goto S;goto S; goto S;end;end;end;end;local _GsubTable_;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;local "..VarName..";;;;;;;;;;;;;;;;;;;;"..VarName.."={{{{{{{{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}}}}}} ;;;;;; ;; ;;;; _GsubTable_={{\"1\",\"$⁰\"},{\"2\",\"$⁹\"},{\"3\",\"$⁸\"},{\"4\",\"$⁷\"},{\"5\",\"$⁶\"},{\"6\",\"$⁵\"},{\"7\",\"$⁴\"},{\"8\",\"$³\"},{\"9\",\"$²\"},{\"0\",\"$¹\"},{\"a\",\"め26\"},{\"b\",\"め25\"},{\"c\",\"め24\"},{\"d\",\"め23\"},{\"e\",\"め22\"},{\"f\",\"め21\"},{\"g\",\"め20\"},{\"h\",\"め19\"},{\"i\",\"め18\"},{\"j\",\"め17\"},{\"k\",\"め16\"},{\"l\",\"め15\"},{\"m\",\"め14\"},{\"n\",\"め13\"},{\"o\",\"め12\"},{\"p\",\"め11\"},{\"q\",\"め10\"},{\"r\",\"め9\"},{\"s\",\"め8\"},{\"t\",\"め7\"},{\"u\",\"め6\"},{\"v\",\"め5\"},{\"w\",\"め4\"},{\"x\",\"め3\"},{\"y\",\"め2\"},{\"z\",\"め1\"},{\"A\",\"ㄖ26\"},{\"B\",\"ㄖ25\"},{\"C\",\"ㄖ24\"},{\"D\",\"ㄖ23\"},{\"E\",\"ㄖ22\"},{\"F\",\"ㄖ21\"},{\"G\",\"ㄖ20\"},{\"H\",\"ㄖ19\"},{\"I\",\"ㄖ18\"},{\"J\",\"ㄖ17\"},{\"K\",\"ㄖ16\"},{\"L\",\"ㄖ15\"},{\"M\",\"ㄖ14\"},{\"N\",\"ㄖ13\"},{\"O\",\"ㄖ12\"},{\"P\",\"ㄖ11\"},{\"Q\",\"ㄖ10\"},{\"R\",\"ㄖ9\"},{\"S\",\"ㄖ8\"},{\"T\",\"ㄖ7\"},{\"U\",\"ㄖ6\"},{\"V\",\"ㄖ5\"},{\"W\",\"ㄖ4\"},{\"X\",\"ㄖ3\"},{\"Y\",\"ㄖ2\"},{\"Z\",\"ㄖ1\"}};;;;;;;;;;;;;;;;"..VarName.."={{{{{{{{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}}}}}};;;;;;;;while (nil) do ; local i = { } if ( i . i ) then ; i . i = ( i . i ( i ) ) end ; end while ( nil ) do ; for i = i , i do ; local i = { } if ( i . i ) then ; i . i = i . i ( i ) end ; for ii = i . i , i . i , i . i do ; local ii = { } if ( ii . i ) then ; ii . i = ii . i ( ) end ; for iii = i , ii . i , i do ; local iii = { } if ( iii . i ) then ; iii . i = iii . i ( i ) end ; for iiii = i , ii , iii . i do ; local iiii = { } if ( iiii . i ) then ; iiii . i = iiii . i ( i ) end ; local iiii = { } if ( iiii . i ) then ; iiii . i = ( iiii | iii | ii | i ) ( i ) end ; end ; local iii = { } if ( iii . i ) then ; iii . i = ( true | iii | ii | i ) ( i ) end ; end ; local ii = { } if ( ii . i ) then ; ii . i = ( true | false | ii | i ) ( i ) end ; end ; local i = { } if ( i . i ) then ; i . i = ( true | false | nil | i ) ( i ) end ; return ( true | false | nil ) end ; return ; end while ( nil ) do ; for i = i , i do ; local i = { } if ( i . i ) then ; i . i = i . i ( i ) end ; for ii = i . i , i . i , i . i do ; local ii = { } if ( ii . i ) then ; ii . i = ii . i ( ) end ; for iii = i , ii . i , i do ; local iii = { } if ( iii . i ) then ; iii . i = iii . i ( i ) end ; for iiii = i , ii , iii . i do ; local iiii = { } if ( iiii . i ) then ; iiii . i = iiii . i ( i ) end ; local iiii = { } if ( iiii . i ) then ; iiii . i = ( iiii | iii | ii | i ) ( i ) end ; end ; local iii = { } if ( iii . i ) then ; iii . i = ( true | iii | ii | i ) ( i ) end ; end ; local ii = { } if ( ii . i ) then ; ii . i = ( true | false | ii | i ) ( i ) end ; end ; local i = { } if ( i . i ) then ; i . i = ( true | false | nil | i ) ( i ) end ; return ( true | false | nil ) end ; return ; end while ( nil ) do ; local i = { } if ( i . i ) then ; i . i = ( i . i ( i ) ) end ; end while ( nil ) do ; for i = i , i do ; local i = { } if ( i . i ) then ; i . i = i . i ( i ) end ; for ii = i . i , i . i , i . i do ; local ii = { } if ( ii . i ) then ; ii . i = ii . i ( ) end ; for iii = i , ii . i , i do ; local iii = { } if ( iii . i ) then ; iii . i = iii . i ( i ) end ; for iiii = i , ii , iii . i do ; local iiii = { } if ( iiii . i ) then ; iiii . i = iiii . i ( i ) end ; local iiii = { } if ( iiii . i ) then ; iiii . i = ( iiii | iii | ii | i ) ( i ) end ; end ; local iii = { } if ( iii . i ) then ; iii . i = ( true | iii | ii | i ) ( i ) end ; end ; local ii = { } if ( ii . i ) then ; ii . i = ( true | false | ii | i ) ( i ) end ; end ; local i = { } if ( i . i ) then ; i . i = ( true | false | nil | i ) ( i ) end ; return ( true | false | nil ) end ; return ; end while ( nil ) do ; for i = i , i do ; local i = { } if ( i . i ) then ; i . i = i . i ( i ) end ; for ii = i . i , i . i , i . i do ; local ii = { } if ( ii . i ) then ; ii . i = ii . i ( ) end ; for iii = i , ii . i , i do ; local iii = { } if ( iii . i ) then ; iii . i = iii . i ( i ) end ; for iiii = i , ii , iii . i do ; local iiii = { } if ( iiii . i ) then ; iiii . i = iiii . i ( i ) end ; local iiii = { } if ( iiii . i ) then ; iiii . i = ( iiii | iii | ii | i ) ( i ) end ; end ; local iii = { } if ( iii . i ) then ; iii . i = ( true | iii | ii | i ) ( i ) end ; end ; local ii = { } if ( ii . i ) then ; ii . i = ( true | false | ii | i ) ( i ) end ; end ; local i = { } if ( i . i ) then ; i . i = ( true | false | nil | i ) ( i ) end ; return ( true | false | nil ) end ; return ; end while ( nil ) do ; local i = { } if ( i . i ) then ; i . i = ( i . i ( i ) ) end ; end while ( nil ) do ; for i = i , i do ; local i = { } if ( i . i ) then ; i . i = i . i ( i ) end ; for ii = i . i , i . i , i . i do ; local ii = { } if ( ii . i ) then ; ii . i = ii . i ( ) end ; for iii = i , ii . i , i do ; local iii = { } if ( iii . i ) then ; iii . i = iii . i ( i ) end ; for iiii = i , ii , iii . i do ; local iiii = { } if ( iiii . i ) then ; iiii . i = iiii . i ( i ) end ; local iiii = { } if ( iiii . i ) then ; iiii . i = ( iiii | iii | ii | i ) ( i ) end ; end ; local iii = { } if ( iii . i ) then ; iii . i = ( true | iii | ii | i ) ( i ) end ; end ; local ii = { } if ( ii . i ) then ; ii . i = ( true | false | ii | i ) ( i ) end ; end ; local i = { } if ( i . i ) then ; i . i = ( true | false | nil | i ) ( i ) end ; return ( true | false | nil ) end ; return ; end while ( nil ) do ; for i = i , i do ; local i = { } if ( i . i ) then ; i . i = i . i ( i ) end ; for ii = i . i , i . i , i . i do ; local ii = { } if ( ii . i ) then ; ii . i = ii . i ( ) end ; for iii = i , ii . i , i do ; local iii = { } if ( iii . i ) then ; iii . i = iii . i ( i ) end ; for iiii = i , ii , iii . i do ; local iiii = { } if ( iiii . i ) then ; iiii . i = iiii . i ( i ) end ; local iiii = { } if ( iiii . i ) then ; iiii . i = ( iiii | iii | ii | i ) ( i ) end ; end ; local iii = { } if ( iii . i ) then ; iii . i = ( true | iii | ii | i ) ( i ) end ; end ; local ii = { } if ( ii . i ) then ; ii . i = ( true | false | ii | i ) ( i ) end ; end ; local i = { } if ( i . i ) then ; i . i = ( true | false | nil | i ) ( i ) end ; return ( true | false | nil ) end ; return ; end while ( nil ) do ; local i = { } if ( i . i ) then ; i . i = ( i . i ( i ) ) end ; end while ( nil ) do ; for i = i , i do ; local i = { } if ( i . i ) then ; i . i = i . i ( i ) end ; for ii = i . i , i . i , i . i do ; local ii = { } if ( ii . i ) then ; ii . i = ii . i ( ) end ; for iii = i , ii . i , i do ; local iii = { } if ( iii . i ) then ; iii . i = iii . i ( i ) end ; for iiii = i , ii , iii . i do ; local iiii = { } if ( iiii . i ) then ; iiii . i = iiii . i ( i ) end ; local iiii = { } if ( iiii . i ) then ; iiii . i = ( iiii | iii | ii | i ) ( i ) end ; end ; local iii = { } if ( iii . i ) then ; iii . i = ( true | iii | ii | i ) ( i ) end ; end ; local ii = { } if ( ii . i ) then ; ii . i = ( true | false | ii | i ) ( i ) end ; end ; local i = { } if ( i . i ) then ; i . i = ( true | false | nil | i ) ( i ) end ; return ( true | false | nil ) end ; return ; end while ( nil ) do ; for i = i , i do ; local i = { } if ( i . i ) then ; i . i = i . i ( i ) end ; for ii = i . i , i . i , i . i do ; local ii = { } if ( ii . i ) then ; ii . i = ii . i ( ) end ; for iii = i , ii . i , i do ; local iii = { } if ( iii . i ) then ; iii . i = iii . i ( i ) end ; for iiii = i , ii , iii . i do ; local iiii = { } if ( iiii . i ) then ; iiii . i = iiii . i ( i ) end ; local iiii = { } if ( iiii . i ) then ; iiii . i = ( iiii | iii | ii | i ) ( i ) end ; end ; local iii = { } if ( iii . i ) then ; iii . i = ( true | iii | ii | i ) ( i ) end ; end ; local ii = { } if ( ii . i ) then ; ii . i = ( true | false | ii | i ) ( i ) end ; end ; local i = { } if ( i . i ) then ; i . i = ( true | false | nil | i ) ( i ) end ; return ( true | false | nil ) end ; return ; end while ( nil ) do ; local i = { } if ( i . i ) then ; i . i = ( i . i ( i ) ) end ; end while ( nil ) do ; for i = i , i do ; local i = { } if ( i . i ) then ; i . i = i . i ( i ) end ; for ii = i . i , i . i , i . i do ; local ii = { } if ( ii . i ) then ; ii . i = ii . i ( ) end ; for iii = i , ii . i , i do ; local iii = { } if ( iii . i ) then ; iii . i = iii . i ( i ) end ; for iiii = i , ii , iii . i do ; local iiii = { } if ( iiii . i ) then ; iiii . i = iiii . i ( i ) end ; local iiii = { } if ( iiii . i ) then ; iiii . i = ( iiii | iii | ii | i ) ( i ) end ; end ; local iii = { } if ( iii . i ) then ; iii . i = ( true | iii | ii | i ) ( i ) end ; end ; local ii = { } if ( ii . i ) then ; ii . i = ( true | false | ii | i ) ( i ) end ; end ; local i = { } if ( i . i ) then ; i . i = ( true | false | nil | i ) ( i ) end ; return ( true | false | nil ) end ; return ; end while ( nil ) do ; for i = i , i do ; local i = { } if ( i . i ) then ; i . i = i . i ( i ) end ; for ii = i . i , i . i , i . i do ; local ii = { } if ( ii . i ) then ; ii . i = ii . i ( ) end ; for iii = i , ii . i , i do ; local iii = { } if ( iii . i ) then ; iii . i = iii . i ( i ) end ; for iiii = i , ii , iii . i do ; local iiii = { } if ( iiii . i ) then ; iiii . i = iiii . i ( i ) end ; local iiii = { } if ( iiii . i ) then ; iiii . i = ( iiii | iii | ii | i ) ( i ) end ; end ; local iii = { } if ( iii . i ) then ; iii . i = ( true | iii | ii | i ) ( i ) end ; end ; local ii = { } if ( ii . i ) then ; ii . i = ( true | false | ii | i ) ( i ) end ; end ; local i = { } if ( i . i ) then ; i . i = ( true | false | nil | i ) ( i ) end ; return ( true | false | nil ) end ; return ; end if null then;while null do if nil then while 1==2 do;::S:: goto S; goto S; goto S; goto S; goto S; goto S; goto S; goto S; goto S; goto S; goto S; goto S; goto S; goto S;goto S; goto S;end;end;end;end;;;;;;;;;;;;;".._StrDnc_.." = function (Str) local StrResult;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;StrResult = \"\";;;;;;;;;;;;"..VarName.."={{{{{{{{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}}}}}};;;;;;;;;;;for i in ipairs(Str) do;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;StrResult = StrResult..string.char(((((Str[i] + 14657) / 2) + 5000) / 2 + 1000) / 123 + 10);;;;;;;;;;;;;"..VarName.."={{{{{{{{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}}}}}};;;;;;;;;;;;end;;;;;;;;;;;;;;"..VarName.."={{{{{{{{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}}}}}};;;;;;;;;;;;;;;;;;;local Str;;;;;;;;;;;;"..VarName.."={{{{{{{{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}}}}}};;;;;;;;;;;;;;;;;;;Str = StrResult for k,v in pairs(_GsubTable_) do Str = Str:gsub(v[2],v[1]) end return Str end " else A = "" end
     if _False_ ~= nil then B = _False_.."=false;" else B = "" end
     if _Ture_ ~= nil then C = _Ture_.."=true;" else C = "" end
-    Code = A..B..C..Code
+    Code = A:gsub("\"(.-)\"",StringEnc2)..B..C..Code
+    --====整理脚本====--
+    CodeBak = Code
+    Code = Code:gsub("{%s","{")
+    Code = Code:gsub("%s}","}")
+    Code = Code:gsub("%s%(","(")
+    Code = Code:gsub("%(%s","(")
+    Code = Code:gsub("%s%)",")")
+    Code = Code:gsub("%)%s",")")
+    Code = Code:gsub("%s;",";")
+    Code = Code:gsub(";%s",";")
+    while Code:find("%s%s") ~= nil do
+        Code = Code:gsub("%s%s"," ")
+    end
+    local a,b = load(Code)
+    if a == nil then
+        gg.alert("清理错误")
+        Code = CodeBak
+    end
     --====编译====--
     local a,b = load(Code)
     if a == nil then
@@ -1058,7 +1073,7 @@ function Start()
         gg.alert("加密失败")
         Main()
     end
-    --====加密二进制====--)
+    --====加密二进制====--
     CodeBak = Code
     Code = Code:gsub(string.char(0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFA, 0xFA, 0xFA),string.char(0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFA, 0xFA, 0xFA))
     Code = Code:gsub(string.char(0x01, 0x00, 0x00, 0x00, 0x1f, 0x00, 0x80, 0x00),string.char(0x00, 0x00, 0x00,0x00), 1)
@@ -1122,8 +1137,20 @@ function Start()
         if Set7 == "开" then  G = "✔️" else  G = "❌" end
         if Set8 == "开" then  H = "✔️" else  H = "❌" end
         if Set9 == "开" then  I = "✔️" else  I = "❌" end
-        local F = gg.alert("加密成功\n\n输出位置:"..Out[2].."/"..Out[1]..Out[3].."\nOP混淆:"..A.."\nBool混淆:"..B.."\nNil混淆:"..C.."\n反Dec:"..D.."\n反Log:"..E.."\n防函数重写:"..F.."\n内置函数加密:"..G.."\n自定义函数加密:"..H.."\n反Lasm:"..I,"返回主页","","退出加密")
+        local F = gg.alert("加密成功\n\n输出位置:"..Out[2].."/"..Out[1]..Out[3].."\nOP混淆:"..A.."\nBool混淆:"..B.."\nNil混淆:"..C.."\n反Dec:"..D.."\n反Log:"..E.."\n防函数重写:"..F.."\n内置函数加密:"..G.."\n自定义函数加密:"..H.."\n防抓包:"..I,"返回主页","","退出加密")
         if F == 1 then Main() else Exit() end
+        Code = nil
+        CodeBak = nil
+        A = nil
+        B = nil
+        C = nil
+        D = nil
+        E = nil
+        F = nil
+        G = nil
+        H = nil
+        I = nil
+        FuncTab = nil
         Main()
     end
 end
@@ -1138,7 +1165,7 @@ function Set()
     "防函数重写["..Set6.."]",
     "内置函数加密["..Set7.."]",
     "自定义函数加密["..Set8.."]",
-    "反Lasm["..Set9.."]",
+    "防抓包["..Set9.."]",
     "返回主页"
     },nil,"Storm-Lua-Enc Pro\n雨后总有彩虹🌈深夜总有繁星✨\n加密脚本:"..ScriptFile)
     if Menu == nil then Main() end
