@@ -372,7 +372,7 @@ if io.open("/storage/emulated/0/.S-L-E Pro.cfg") == nil then
     --====默认设置====--
     ScriptFileLog = "/storage/emulated/0/"
     OutFileLog = "/storage/emulated/0"
-    Set1 = "开" --OP混淆
+    Set1 = "开" --写入Logo
     Set2 = "关" --Bool混淆
     Set3 = "关" --Nil混淆
     Set4 = "关" --反Dec
@@ -410,10 +410,10 @@ end
 --====↓界面UI↓====--
 function Main()
     local Menu = gg.choice({
-        "选择脚本",
-        "开始加密",
-        "加密设置",
-        "退出加密"
+        "📂选择脚本",
+        "🛡开始加密",
+        "⚙️加密设置",
+        "⚠️退出加密"
     },nil,"Storm-Lua-Enc Pro\n雨后总有彩虹🌈深夜总有繁星✨\n加密脚本:"..ScriptFile)
     if Menu == nil then Main() end
     if Menu == 1 then Select() end
@@ -915,9 +915,6 @@ function Start()
             Code = CodeBak
         end
     end
-    --====OP混淆====--
-    if Set1 == "开" then
-    end
     --====Load混淆====--
     CodeBak = Code
     Code = "_ENV[\"load\"](\" �J  �� � A �K  ��  �  A� �� �L  d@ �� �� � AA  �� �� � A �B  ��  �  A �� �C  � A� �� �D  � A� � �� d� � e   @   @ K ��@  ��  �  A �A �A  � A� � � C  A�  ��  � D AD  ��  ��  � A� �E  ��  �  A � �F  �  A�  � �G H  A� �� � 	 AI  ��  ��  \") _ENV[\"load\"](\"#LuaS++ #> Load ->>"..RandomString(100).."\") "..Code
@@ -1060,6 +1057,21 @@ function Start()
         gg.alert("清理错误")
         Code = CodeBak
     end
+    --====Logo====--
+    if Set1 == "开" then
+        CodeBak = Code
+        local Logo = [[
+        🔥 By Dump
+        🛡 S-L-E Pro
+        ]]
+        Code = "(function(...)"..Code..";end)([=[\n\n"..Logo.."\n]=])"
+        Logo = nil
+        local a,b = load(Code)
+        if a == nil then
+            gg.alert("Logo写入失败")
+            Code = CodeBak
+        end
+    end
     --====编译====--
     local a,b = load(Code)
     if a == nil then
@@ -1114,20 +1126,6 @@ function Start()
         if Out[3] == "nil" then Out[3] = "" end
         OutFileLog = Out[2]
         io.open(Out[2].."/"..Out[1]..Out[3],"w+"):write(Code)
-        --====拆卸====--有问题
-        --[[local r = gg.internal2(load(Code),Out[2].."/"..Out[1]..Out[3])
-        if r == nil then
-            gg.alert("汇编加密失败")
-            goto End
-        end
-        os.exit()
-        Code = io.open(Out[2].."/"..Out[1]..Out[3],"r"):read("*a")
-        --====加密汇编====--
-        --====重编译====--
-        --Code = Code:gsub("\"=?\"","\""..Out[2].."/"..Out[1]..Out[3].."\"")
-        --Code = string.dump(load(Code),true)
-        io.open(Out[2].."/"..Out[1]..Out[3],"w+"):write(Code)
-        ::End::]]
         if Set1 == "开" then A = "✔️" else  A = "❌" end
         if Set2 == "开" then  B = "✔️" else  B = "❌" end
         if Set3 == "开" then  C = "✔️" else  C = "❌" end
@@ -1137,7 +1135,7 @@ function Start()
         if Set7 == "开" then  G = "✔️" else  G = "❌" end
         if Set8 == "开" then  H = "✔️" else  H = "❌" end
         if Set9 == "开" then  I = "✔️" else  I = "❌" end
-        local F = gg.alert("加密成功\n\n输出位置:"..Out[2].."/"..Out[1]..Out[3].."\nOP混淆:"..A.."\nBool混淆:"..B.."\nNil混淆:"..C.."\n反Dec:"..D.."\n反Log:"..E.."\n防函数重写:"..F.."\n内置函数加密:"..G.."\n自定义函数加密:"..H.."\n防抓包:"..I,"返回主页","","退出加密")
+        local F = gg.alert("加密成功\n\n输出位置:"..Out[2].."/"..Out[1]..Out[3].."\n写入Logo:"..A.."\nBool混淆:"..B.."\nNil混淆:"..C.."\n反Dec:"..D.."\n反Log:"..E.."\n防函数重写:"..F.."\n内置函数加密:"..G.."\n自定义函数加密:"..H.."\n防抓包:"..I,"返回主页","","退出加密")
         if F == 1 then Main() else Exit() end
         Code = nil
         CodeBak = nil
@@ -1157,7 +1155,7 @@ end
 
 function Set()
     local Menu = gg.choice({
-    "OP混淆["..Set1.."]",
+    "写入Logo["..Set1.."]",
     "Bool混淆["..Set2.."]",
     "Nil混淆["..Set3.."]",
     "反Dec["..Set4.."]",
