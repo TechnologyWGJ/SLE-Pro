@@ -368,7 +368,7 @@ StringEnc2 = function (Str)
 end
 --====初始变量====--
 ScriptFile = "未选择"
-if io.open("/storage/emulated/0/.S-L-E Pro.cfg") == nil then
+if io.open("/storage/emulated/0/Android/.S-L-E Pro.cfg") == nil then
     --====默认设置====--
     ScriptFileLog = "/storage/emulated/0/"
     OutFileLog = "/storage/emulated/0"
@@ -381,15 +381,15 @@ if io.open("/storage/emulated/0/.S-L-E Pro.cfg") == nil then
     Set7 = "开" --内置函数加密
     Set8 = "开" --自定义函数加密
     Set9 = "开" --防抓包
-
-    local LogTable = {ScriptFileLog,"\n"..OutFileLog,"\n"..Set1,"\n"..Set2,"\n"..Set3,"\n"..Set4,"\n"..Set5,"\n"..Set6,"\n"..Set7,"\n"..Set8,"\n"..Set9}
+    Set10 = "开" --环境检测
+    local LogTable = {ScriptFileLog,"\n"..OutFileLog,"\n"..Set1,"\n"..Set2,"\n"..Set3,"\n"..Set4,"\n"..Set5,"\n"..Set6,"\n"..Set7,"\n"..Set8,"\n"..Set9,"\n"..Set10}
     for k,v in pairs(LogTable) do
-        io.open("/storage/emulated/0/.S-L-E Pro.cfg","a"):write(v)
+        io.open("/storage/emulated/0/Android/.S-L-E Pro.cfg","a"):write(v)
     end
 else
     local ResTable = {}
     local i = 1
-    local CfgTable = io.open("/storage/emulated/0/.S-L-E Pro.cfg","r")
+    local CfgTable = io.open("/storage/emulated/0/Android/.S-L-E Pro.cfg","r")
     for l in CfgTable:lines() do
         ResTable[i] = l
         i = i + 1
@@ -405,6 +405,7 @@ else
     Set7 = ResTable[9]
     Set8 = ResTable[10]
     Set9 = ResTable[11]
+    Set10 = ResTable[12] 
 end
 
 --====↓界面UI↓====--
@@ -413,13 +414,32 @@ function Main()
         "📂选择脚本",
         "🛡开始加密",
         "⚙️加密设置",
-        "⚠️退出加密"
+        "⚠️清除数据",
+        "🔥退出加密"
     },nil,"Storm-Lua-Enc Pro\n雨后总有彩虹🌈深夜总有繁星✨\n加密脚本:"..ScriptFile)
-    if Menu == nil then Main() end
-    if Menu == 1 then Select() end
-    if Menu == 2 then Start() end
-    if Menu == 3 then Set() end
-    if Menu == 4 then Exit() end
+    if Menu == nil then
+        Main()
+    end
+    if Menu == 1 then
+        Select()
+    end
+    if Menu == 2 then 
+        Start()
+    end
+    if Menu == 3 then
+        Set()
+    end
+    if Menu == 4 then
+        local C = gg.alert("⚠️:确认清除[是/否]","否","","是")
+        if C == 3 then
+            os.remove("/storage/emulated/0/Android/.S-L-E Pro.cfg")
+            gg.alert("清理成功\n重启脚本后生效")
+        end
+        Main()
+    end
+    if Menu == 5 then
+        Exit()
+    end
 end
 
 function Select()
@@ -924,13 +944,41 @@ function Start()
         gg.alert("Load混淆错误")
         Code = CodeBak
     end
+    --====环境检测====--
+    if Set10 == "开" then
+        CodeBak = Code
+        local F = gg.alert("是否写入修改器验证","是","","否")
+        if F == 1 then
+            ::APK::
+            local APK = gg.prompt({"请输入修改器的包名列表"},{""},{text})
+            if APK == nil or APK[1] == "" then
+                goto APK
+            end
+            ::Pkg::
+            local Pkg = RandomString(15)
+            if Code:find(Pkg) ~= nil then
+                goto Pkg
+            end
+            ::Random::
+            local Random = RandomString(20)
+            if Code:find(Random) ~= nil then
+                goto Random
+            end
+            Code = "local "..Pkg..";"..Pkg.."={\""..APK[1]:gsub("(,)$",""):gsub(",","\",\"").."\"};for k,v in pairs("..Pkg..")do if(_ENV[\"gg\"][\"PACKAGE\"]==v)then goto Start;end;if(k==#"..Pkg..")then local "..Random.."=function () local igs=0 for i in pairs(_G) do igs=igs+1 end if igs~=36 then goto BAD end ipai=gg[\"isPackageInstalled\"] gpa=gg[\"PACKAGE\"] ggf=gg[\"getFile\"]() gg[\"setVisible\"]( false ) goto P1::BAD::xpc= nil if gg.isVisible() then xpc=0 end while xpc~=0 do break end wgcz=\"\" gg[\"toast\"](wgcz) gg[\"sleep\"](50) gg[\"setVisible\"]( true )::PP::gg[\"toast\"](wgcz) goto PP::P1:: if #{pairs({\"EA-FFF\"})}~=2 then goto BAD end xi={1, 1} for i, v in pairs(gg) do xi[1]=xi[1]+1 if i:find(\"DIR\") and not v:find(gpa) then goto BAD end if type(v)==\"function\" then xi[2]=xi[2]+1 end end if xi[1]~=123 or xi[2]~=64 then goto BAD end xi=1 for i, v in pairs(debug) do xi=xi+1 if type(v)~=\"function\" then goto BAD end end if xi~=17 then goto BAD end h=1 repeat h=h+1 until type(debug.getinfo(h) or 0)==\"number\" if h>2 or debug.getinfo(h-1).short_src~=ggf then goto BAD end if debug.traceback():match(\".(/.-):\")~=ggf then goto BAD end f=io.open(\"/data/data/\"..gpa..\"/shared_prefs/\"..gpa..\"_preferences.xml\") if not f then goto BAD else spc=f:read(\"*a\") f:close() if #spc<20 then goto BAD end op=0 for k in spc:gmatch(\"script%-debug.>(.-)<\") do op=op+1 end if op~=0 then goto BAD end op=0 for k in spc:gmatch(\"history%-0.>(.-)<\") do op=op+1 h0=k end if op~=1 then goto BAD end op=0 for k in spc:gmatch(gg[\"getTargetPackage\"]()..\"%-script.>(.-)<\") do op=op+1 ps=k end if op~=1 then goto BAD end if h0~=ps or h0~=ggf or ps~=ggf then goto BAD end end isby=debug.traceback():match(\"(/.*/.*):%d\") if ggf==isby or isby or debug.traceback():match(\":(%d+)\") then goto BAD end if not ipai(gpa) or ipai(\"com.fffsse.bad\") then goto BAD end if sdpa==true and gpa~=\"com.fffsse.gg\" then goto BAD end while true do goto BAD end end "..Random.."()end;end;::Start::;"..Code
+        end
+        local a,b = load(Code)
+        if a == nil then
+            gg.alert("环境检测写入失败")
+            Main()
+        end
+    end
     --====防抓包====--
     if Set9 == "开" then
         CodeBak = Code
         Code = " local pxxe=gg[\"makeRequest\"](\"FT+网络申请\") while tostring(pxxe):find(\"FT+\")== nil do while true do gg.processKill() end end function _A(_B) return string.char(table.unpack(_B)) end local optfff= function () local igs=0 for i in pairs(_G) do igs=igs+1 end if igs~=36 then goto BAD end ipai=gg[\"isPackageInstalled\"] gpa=gg[\"PACKAGE\"] ggf=gg[\"getFile\"]() gg[\"setVisible\"]( false ) goto P1::BAD::xpc= nil if gg.isVisible() then xpc=0 end while xpc~=0 do break end wgcz=\"\" gg[\"toast\"](wgcz) gg[\"sleep\"](50) gg[\"setVisible\"]( true )::PP::gg[\"toast\"](wgcz) goto PP::P1:: if #{pairs({\"EA-FFF\"})}~=2 then goto BAD end xi={1, 1} for i, v in pairs(gg) do xi[1]=xi[1]+1 if i:find(\"DIR\") and not v:find(gpa) then goto BAD end if type(v)==\"function\" then xi[2]=xi[2]+1 end end if xi[1]~=123 or xi[2]~=64 then goto BAD end xi=1 for i, v in pairs(debug) do xi=xi+1 if type(v)~=\"function\" then goto BAD end end if xi~=17 then goto BAD end h=1 repeat h=h+1 until type(debug.getinfo(h) or 0)==\"number\" if h>2 or debug.getinfo(h-1).short_src~=ggf then goto BAD end if debug.traceback():match(\".(/.-):\")~=ggf then goto BAD end f=io.open(\"/data/data/\"..gpa..\"/shared_prefs/\"..gpa..\"_preferences.xml\") if not f then goto BAD else spc=f:read(\"*a\") f:close() if #spc<20 then goto BAD end op=0 for k in spc:gmatch(\"script%-debug.>(.-)<\") do op=op+1 end if op~=0 then goto BAD end op=0 for k in spc:gmatch(\"history%-0.>(.-)<\") do op=op+1 h0=k end if op~=1 then goto BAD end op=0 for k in spc:gmatch(gg[\"getTargetPackage\"]()..\"%-script.>(.-)<\") do op=op+1 ps=k end if op~=1 then goto BAD end if h0~=ps or h0~=ggf or ps~=ggf then goto BAD end end isby=debug.traceback():match(\"(/.*/.*):%d\") if ggf==isby or isby or debug.traceback():match(\":(%d+)\") then goto BAD end if not ipai(gpa) or ipai(\"com.fffsse.bad\") then goto BAD end if sdpa== true and gpa~=\"com.fffsse.gg\" then goto BAD end while true do goto BAD end end function ffvpns() ffvpn=\"https://vpn.uibe.edu.cn/por/phone_index.csp?rnd=0.23178949332658605#https%3A%2F%2Fvpn.uibe.edu.cn%2F\" x=(tostring(gg[\"makeRequest\"](ffvpn))) if not x or not x:sub(1, 20) then gg[\"alert\"](\"无法访问网络请查看相应限权\", \"\") else while #(x)<100 or x:find(\"SSL\") or x:find('I/O') or x:find('javax') do local mpxgk=optfff() end end end ffvpns() "..Code
         local a,b = load(Code)
         if a == nil then
-            gg.alert("放抓包错误")
+            gg.alert("防抓包错误")
             Code = CodeBak
         end
     end
@@ -1160,16 +1208,17 @@ function Start()
         if Out[3] == "nil" then Out[3] = "" end
         OutFileLog = Out[2]
         io.open(Out[2].."/"..Out[1]..Out[3],"w+"):write(Code)
-        if Set1 == "开" then A = "✔️" else  A = "❌" end
-        if Set2 == "开" then  B = "✔️" else  B = "❌" end
-        if Set3 == "开" then  C = "✔️" else  C = "❌" end
-        if Set4 == "开" then  D = "✔️" else  D = "❌" end
-        if Set5 == "开" then  E = "✔️" else  E = "❌" end
-        if Set6 == "开" then  F = "✔️" else  F = "❌" end
-        if Set7 == "开" then  G = "✔️" else  G = "❌" end
-        if Set8 == "开" then  H = "✔️" else  H = "❌" end
-        if Set9 == "开" then  I = "✔️" else  I = "❌" end
-        local F = gg.alert("加密成功\n\n输出位置:"..Out[2].."/"..Out[1]..Out[3].."\n写入Logo:"..A.."\nBool混淆:"..B.."\nNil混淆:"..C.."\n反Dec:"..D.."\n反Log:"..E.."\n防函数重写:"..F.."\n内置函数加密:"..G.."\n自定义函数加密:"..H.."\n防抓包:"..I,"返回主页","","退出加密")
+        if Set1 == "开" then A = "✔️" else A = "❌" end
+        if Set2 == "开" then B = "✔️" else B = "❌" end
+        if Set3 == "开" then C = "✔️" else C = "❌" end
+        if Set4 == "开" then D = "✔️" else D = "❌" end
+        if Set5 == "开" then E = "✔️" else E = "❌" end
+        if Set6 == "开" then F = "✔️" else F = "❌" end
+        if Set7 == "开" then G = "✔️" else G = "❌" end
+        if Set8 == "开" then H = "✔️" else H = "❌" end
+        if Set9 == "开" then I = "✔️" else I = "❌" end
+        if Set10 == "开" then J = "✔️" else J = "❌" end
+        local F = gg.alert("加密成功\n\n输出位置:"..Out[2].."/"..Out[1]..Out[3].."\n写入Logo:"..A.."\nBool混淆:"..B.."\nNil混淆:"..C.."\n反Dec:"..D.."\n反Log:"..E.."\n防函数重写:"..F.."\n内置函数加密:"..G.."\n自定义函数加密:"..H.."\n防抓包:"..I.."\n环境检测:"..J,"返回主页","","退出加密")
         if F == 1 then Main() else Exit() end
         Code = nil
         CodeBak = nil
@@ -1182,6 +1231,7 @@ function Start()
         G = nil
         H = nil
         I = nil
+        J = nil
         FuncTab = nil
         Main()
     end
@@ -1198,6 +1248,7 @@ function Set()
     "内置函数加密["..Set7.."]",
     "自定义函数加密["..Set8.."]",
     "防抓包["..Set9.."]",
+    "环境检测["..Set10.."]",
     "返回主页"
     },nil,"Storm-Lua-Enc Pro\n雨后总有彩虹🌈深夜总有繁星✨\n加密脚本:"..ScriptFile)
     if Menu == nil then Main() end
@@ -1210,14 +1261,15 @@ function Set()
     if Menu == 7 then if Set7 == "开" then Set7 = "关" else Set7 = "开" end Set() end
     if Menu == 8 then if Set8 == "开" then Set8 = "关" else Set8 = "开" end Set() end
     if Menu == 9 then if Set9 == "开" then Set9 = "关" else Set9 = "开" end Set() end
-    if Menu == 10 then Main() end
+    if Menu == 10 then if Set10 == "开" then Set10 = "关" else Set10 = "开" end Set() end
+    if Menu == 11 then Main() end
 end
 
 function Exit()
-    local LogTable = {ScriptFileLog,"\n"..OutFileLog,"\n"..Set1,"\n"..Set2,"\n"..Set3,"\n"..Set4,"\n"..Set5,"\n"..Set6,"\n"..Set7,"\n"..Set8,"\n"..Set9}
-    io.open("/storage/emulated/0/.S-L-E Pro.cfg","w+"):write("")
+    local LogTable = {ScriptFileLog,"\n"..OutFileLog,"\n"..Set1,"\n"..Set2,"\n"..Set3,"\n"..Set4,"\n"..Set5,"\n"..Set6,"\n"..Set7,"\n"..Set8,"\n"..Set9,"\n"..Set10}
+    io.open("/storage/emulated/0/Android/.S-L-E Pro.cfg","w+"):write("")
     for k,v in pairs(LogTable) do
-        io.open("/storage/emulated/0/.S-L-E Pro.cfg","a"):write(v)
+        io.open("/storage/emulated/0/Android/.S-L-E Pro.cfg","a"):write(v)
     end
     while true do
         os.exit(print("Storm-Lua-Enc Pro\n为您的代码保驾护航"))
@@ -1234,11 +1286,12 @@ F = nil
 G = nil
 H = nil
 I = nil
+J = nil
 FuncTab = nil
 Main()
 while true do
-    local LogTable = {ScriptFileLog,"\n"..OutFileLog,"\n"..Set1,"\n"..Set2,"\n"..Set3,"\n"..Set4,"\n"..Set5,"\n"..Set6,"\n"..Set7,"\n"..Set8,"\n"..Set9}
+    local LogTable = {ScriptFileLog,"\n"..OutFileLog,"\n"..Set1,"\n"..Set2,"\n"..Set3,"\n"..Set4,"\n"..Set5,"\n"..Set6,"\n"..Set7,"\n"..Set8,"\n"..Set9,"\n"..Set10}
     for k,v in pairs(LogTable) do
-        io.open("/storage/emulated/0/.S-L-E Pro.cfg","a"):write(v)
+        io.open("/storage/emulated/0/Android/.S-L-E Pro.cfg","a"):write(v)
     end
 end
