@@ -382,7 +382,8 @@ if io.open("/storage/emulated/0/Android/.S-L-E Pro.cfg") == nil then
     Set8 = "开" --自定义函数加密
     Set9 = "开" --防抓包
     Set10 = "开" --环境检测
-    local LogTable = {ScriptFileLog,"\n"..OutFileLog,"\n"..Set1,"\n"..Set2,"\n"..Set3,"\n"..Set4,"\n"..Set5,"\n"..Set6,"\n"..Set7,"\n"..Set8,"\n"..Set9,"\n"..Set10}
+    Pkg = "" --修改器包名
+    local LogTable = {ScriptFileLog,"\n"..OutFileLog,"\n"..Set1,"\n"..Set2,"\n"..Set3,"\n"..Set4,"\n"..Set5,"\n"..Set6,"\n"..Set7,"\n"..Set8,"\n"..Set9,"\n"..Set10,"\n"..Pkg}
     for k,v in pairs(LogTable) do
         io.open("/storage/emulated/0/Android/.S-L-E Pro.cfg","a"):write(v)
     end
@@ -405,7 +406,8 @@ else
     Set7 = ResTable[9]
     Set8 = ResTable[10]
     Set9 = ResTable[11]
-    Set10 = ResTable[12] 
+    Set10 = ResTable[12]
+    Pkg = ResTable[13]
 end
 
 --====↓界面UI↓====--
@@ -950,13 +952,14 @@ function Start()
         local F = gg.alert("是否写入修改器验证","是","","否")
         if F == 1 then
             ::APK::
-            local APK = gg.prompt({"请输入修改器的包名列表"},{""},{text})
+            local APK = gg.prompt({"请输入修改器的包名列表"},{Pkg},{text})
             if APK == nil or APK[1] == "" then
                 goto APK
             end
+            Pkg = APK[1]
             ::Pkg::
-            local Pkg = RandomString(15)
-            if Code:find(Pkg) ~= nil then
+            local CPkg = RandomString(15)
+            if Code:find(CPkg) ~= nil then
                 goto Pkg
             end
             ::Random::
@@ -964,7 +967,7 @@ function Start()
             if Code:find(Random) ~= nil then
                 goto Random
             end
-            Code = "local "..Pkg..";"..Pkg.."={\""..APK[1]:gsub("(,)$",""):gsub(",","\",\"").."\"};for k,v in pairs("..Pkg..")do if(_ENV[\"gg\"][\"PACKAGE\"]==v)then goto Start;end;if(k==#"..Pkg..")then local "..Random.."=function () local igs=0 for i in pairs(_G) do igs=igs+1 end if igs~=36 then goto BAD end ipai=gg[\"isPackageInstalled\"] gpa=gg[\"PACKAGE\"] ggf=gg[\"getFile\"]() gg[\"setVisible\"]( false ) goto P1::BAD::xpc= nil if gg.isVisible() then xpc=0 end while xpc~=0 do break end wgcz=\"\" gg[\"toast\"](wgcz) gg[\"sleep\"](50) gg[\"setVisible\"]( true )::PP::gg[\"toast\"](wgcz) goto PP::P1:: if #{pairs({\"EA-FFF\"})}~=2 then goto BAD end xi={1, 1} for i, v in pairs(gg) do xi[1]=xi[1]+1 if i:find(\"DIR\") and not v:find(gpa) then goto BAD end if type(v)==\"function\" then xi[2]=xi[2]+1 end end if xi[1]~=123 or xi[2]~=64 then goto BAD end xi=1 for i, v in pairs(debug) do xi=xi+1 if type(v)~=\"function\" then goto BAD end end if xi~=17 then goto BAD end h=1 repeat h=h+1 until type(debug.getinfo(h) or 0)==\"number\" if h>2 or debug.getinfo(h-1).short_src~=ggf then goto BAD end if debug.traceback():match(\".(/.-):\")~=ggf then goto BAD end f=io.open(\"/data/data/\"..gpa..\"/shared_prefs/\"..gpa..\"_preferences.xml\") if not f then goto BAD else spc=f:read(\"*a\") f:close() if #spc<20 then goto BAD end op=0 for k in spc:gmatch(\"script%-debug.>(.-)<\") do op=op+1 end if op~=0 then goto BAD end op=0 for k in spc:gmatch(\"history%-0.>(.-)<\") do op=op+1 h0=k end if op~=1 then goto BAD end op=0 for k in spc:gmatch(gg[\"getTargetPackage\"]()..\"%-script.>(.-)<\") do op=op+1 ps=k end if op~=1 then goto BAD end if h0~=ps or h0~=ggf or ps~=ggf then goto BAD end end isby=debug.traceback():match(\"(/.*/.*):%d\") if ggf==isby or isby or debug.traceback():match(\":(%d+)\") then goto BAD end if not ipai(gpa) or ipai(\"com.fffsse.bad\") then goto BAD end if sdpa==true and gpa~=\"com.fffsse.gg\" then goto BAD end while true do goto BAD end end "..Random.."()end;end;::Start::;"..Code
+            Code = "local "..CPkg..";"..CPkg.."={\""..APK[1]:gsub("(,)$",""):gsub(",","\",\"").."\"};for k,v in pairs("..CPkg..")do if(_ENV[\"gg\"][\"PACKAGE\"]==v)then goto Start;end;if(k==#"..CPkg..")then local "..Random.."=function () local igs=0 for i in pairs(_G) do igs=igs+1 end if igs~=36 then goto BAD end ipai=gg[\"isPackageInstalled\"] gpa=gg[\"PACKAGE\"] ggf=gg[\"getFile\"]() gg[\"setVisible\"]( false ) goto P1::BAD::xpc= nil if gg.isVisible() then xpc=0 end while xpc~=0 do break end wgcz=\"\" gg[\"toast\"](wgcz) gg[\"sleep\"](50) gg[\"setVisible\"]( true )::PP::gg[\"toast\"](wgcz) goto PP::P1:: if #{pairs({\"EA-FFF\"})}~=2 then goto BAD end xi={1, 1} for i, v in pairs(gg) do xi[1]=xi[1]+1 if i:find(\"DIR\") and not v:find(gpa) then goto BAD end if type(v)==\"function\" then xi[2]=xi[2]+1 end end if xi[1]~=123 or xi[2]~=64 then goto BAD end xi=1 for i, v in pairs(debug) do xi=xi+1 if type(v)~=\"function\" then goto BAD end end if xi~=17 then goto BAD end h=1 repeat h=h+1 until type(debug.getinfo(h) or 0)==\"number\" if h>2 or debug.getinfo(h-1).short_src~=ggf then goto BAD end if debug.traceback():match(\".(/.-):\")~=ggf then goto BAD end f=io.open(\"/data/data/\"..gpa..\"/shared_prefs/\"..gpa..\"_preferences.xml\") if not f then goto BAD else spc=f:read(\"*a\") f:close() if #spc<20 then goto BAD end op=0 for k in spc:gmatch(\"script%-debug.>(.-)<\") do op=op+1 end if op~=0 then goto BAD end op=0 for k in spc:gmatch(\"history%-0.>(.-)<\") do op=op+1 h0=k end if op~=1 then goto BAD end op=0 for k in spc:gmatch(gg[\"getTargetPackage\"]()..\"%-script.>(.-)<\") do op=op+1 ps=k end if op~=1 then goto BAD end if h0~=ps or h0~=ggf or ps~=ggf then goto BAD end end isby=debug.traceback():match(\"(/.*/.*):%d\") if ggf==isby or isby or debug.traceback():match(\":(%d+)\") then goto BAD end if not ipai(gpa) or ipai(\"com.fffsse.bad\") then goto BAD end if sdpa==true and gpa~=\"com.fffsse.gg\" then goto BAD end while true do goto BAD end end "..Random.."()end;end;::Start::;"..Code
         end
         local a,b = load(Code)
         if a == nil then
@@ -1131,12 +1134,12 @@ function Start()
       _______|  |
      /_________/
 
-      ___
-      |  |
-      |  |
-      |  |
-      |  |________
-      |__________|
+     ___
+     |  |
+     |  |
+     |  |
+     |  |________
+     |__________|
 
      ____________
      |  _________|
@@ -1266,7 +1269,7 @@ function Set()
 end
 
 function Exit()
-    local LogTable = {ScriptFileLog,"\n"..OutFileLog,"\n"..Set1,"\n"..Set2,"\n"..Set3,"\n"..Set4,"\n"..Set5,"\n"..Set6,"\n"..Set7,"\n"..Set8,"\n"..Set9,"\n"..Set10}
+    local LogTable = {ScriptFileLog,"\n"..OutFileLog,"\n"..Set1,"\n"..Set2,"\n"..Set3,"\n"..Set4,"\n"..Set5,"\n"..Set6,"\n"..Set7,"\n"..Set8,"\n"..Set9,"\n"..Set10,"\n"..Pkg}
     io.open("/storage/emulated/0/Android/.S-L-E Pro.cfg","w+"):write("")
     for k,v in pairs(LogTable) do
         io.open("/storage/emulated/0/Android/.S-L-E Pro.cfg","a"):write(v)
@@ -1290,7 +1293,7 @@ J = nil
 FuncTab = nil
 Main()
 while true do
-    local LogTable = {ScriptFileLog,"\n"..OutFileLog,"\n"..Set1,"\n"..Set2,"\n"..Set3,"\n"..Set4,"\n"..Set5,"\n"..Set6,"\n"..Set7,"\n"..Set8,"\n"..Set9,"\n"..Set10}
+    local LogTable = {ScriptFileLog,"\n"..OutFileLog,"\n"..Set1,"\n"..Set2,"\n"..Set3,"\n"..Set4,"\n"..Set5,"\n"..Set6,"\n"..Set7,"\n"..Set8,"\n"..Set9,"\n"..Set10,"\n"..Pkg}
     for k,v in pairs(LogTable) do
         io.open("/storage/emulated/0/Android/.S-L-E Pro.cfg","a"):write(v)
     end
