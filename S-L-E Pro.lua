@@ -2,6 +2,10 @@
 -- © 2023 Dump
 ---------------------
 
+--====模式配置====--
+if not (_ENV or table or bit32 or utf8 or debug or math or os or io or string or gg or gg.alert or os.remove or math.random or string.byte or io.open or gg.choice or os.exit) then
+    os.exit(print("加密不兼容当前GG,请尝试更换原版GG"))
+end
 --====↓加密配置↓====--
 local FunctionLib = {
 print,
@@ -484,16 +488,6 @@ function Start()
     local a,b = load(Code)
     if a == nil then
         gg.alert("代码错误\n#[\n"..b.."\n]")
-        Main()
-    end
-    --====gg.getFile修复====--
-    CodeBak = Code
-    _GetFile_ = "File_"..RandomString(15)
-    Code = Code:gsub("gg.getFile%(%)",_GetFile_)
-    load(_GetFile_.."=\"/storage/emulated/0\"")()
-    local a,b = load(Code)
-    if a == nil then
-        gg.alert("无法兼容脚本")
         Main()
     end
     --====调用字符串加密====--
