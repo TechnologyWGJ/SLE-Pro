@@ -1163,19 +1163,6 @@ function Start()
         gg.alert("加密失败")
         Main()
     end
-    --====加密二进制====--
-    CodeBak = Code
-    Code = Code
-    :gsub(string.char(0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFA, 0xFA, 0xFA),string.char(0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFA, 0xFA, 0xFA))
-    :gsub(string.char(0x01, 0x00, 0x00, 0x00, 0x1f, 0x00, 0x80, 0x00),string.char(0x00, 0x00, 0x00,0x00), 1)
-    :gsub(string.char(0x04, 0x07, 0x00, 0x00, 0x00, 0x6C, 0x52, 0x6C, 0x52, 0x6C, 0x52, 0x00),string.char(0x04, 0x00, 0x00, 0x00, 0x00), 1)
-    :gsub(string.char(0x04, 0x07, 0x00, 0x00, 0x00, 0x52, 0x6C, 0x52, 0x6C, 0x52, 0x6C),string.char(0x04, 0xE9, 0x03, 0x00, 0x00)..string.rep(string.char(6),1000))
-    :gsub(string.char(0x04, 0x07, 0x00, 0x00, 0x00, 0x52, 0x6C, 0x52, 0x6C, 0x52, 0x52),string.char(0x04, 0x11, 0x27, 0x00, 0x00)..string.rep(string.char(6),10000))
-    local a,b = load(Code)
-    if a == nil then
-        gg.alert("加密二进制失败")
-        Code = CodeBak
-    end
     --====替换编译头====--
     ::OutDumpHead::
     CodeBak = Code
@@ -1204,6 +1191,26 @@ function Start()
         if Out[3] == "" then Out[3] = ".lua" end
         if Out[3] == "nil" then Out[3] = "" end
         OutFileLog = Out[2]
+        --====字节码混淆====--
+        CodeBak = Code
+        if not gg.internal2(load(Code),Out[2].."/"..Out[1]..Out[3]) then
+            goto EncEnd
+        end
+        Code = io.open(Out[2].."/"..Out[1]..Out[3],"r"):read("*a")
+        :gsub("maxstacksize [^\n]+","maxstacksize 250")
+        :gsub("linedefined [^\n]+","linedefined 0")
+        :gsub("lastlinedefined [^\n]+","lastlinedefined 0")
+        :gsub("numparams [^\n]+","numparams 250")
+        :gsub("is_vararg [^\n]+","is_vararg 250")
+        :gsub("; .local v[^\n]+","")
+        :gsub("\n%s+","\n")
+        ::EncEnd::
+        local a,b = load(Code)
+        if a == nil then
+            Code = CodeBak
+        else
+            Code = string.dump(load(Code),true)
+        end
         io.open(Out[2].."/"..Out[1]..Out[3],"w+"):write(Code)
         if Set1 == "开" then A = "✔️" else A = "❌" end
         if Set2 == "开" then B = "✔️" else B = "❌" end
