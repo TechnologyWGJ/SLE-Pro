@@ -8,210 +8,210 @@ if not (_ENV or table or bit32 or utf8 or debug or math or os or io or string or
 end
 --====↓加密配置↓====--
 local FunctionLib = {
-print,
-load,
-pcall,
-load,
-xcall,
-dofile,
-loadfile,
-error,
-getmetatable,
-setmetatable,
-collectgarbage,
-tostring,
-tonumber,
-package.require,
-ipairs,
-rawequal,
-assert2,
-rawset,
-next,
-select,
-rawget,
-assert,
-type,
-rawlen,
-gg.getResultsCount,
-gg.multiChoice,
-gg.setSpeed,
-gg.getSpeed,
-gg.bytes,
-gg.getFile,
-gg.require,
-gg.getValues,
-gg.setValues,
-gg.editAll,
-gg.getListItems,
-gg.loadResults,
-gg.getSelectedResults,
-gg.getTargetPackage,
-gg.searchPointer,
-gg.startFuzzy,
-gg.processKill,
-gg.alert,
-gg.setRanges,
-gg.getRanges,
-gg.getLine,
-gg.unrandomizer,
-gg.getActiveTab,
-gg.searchPointer,
-gg.skipRestoreState,
-gg.allocatePage,
-gg.getValuesRange,
-gg.removeListItems,
-gg.getTargetInfo,
-gg.toast,
-gg.processResume,
-gg.makeRequest,
-gg.getLocale,
-gg.getSelectedListItems,
-gg.timeJump,
-gg.processToggle,
-gg.disasm,
-gg.getResultsCount,
-gg.processPause,
-gg.isProcessPaused,
-gg.getRangesList,
-gg.getResults,
-gg.copyText,
-gg.searchFuzzy,
-gg.clearResults,
-gg.removeResults,
-gg.refineAddress,
-gg.refineNumber,
-gg.choice,
-gg.numberFromLocale,
-gg.getSelectedElements,
-gg.showUiButton,
-gg.isVisible,
-gg.gotoAddress,
-gg.getTargetPackage,
-gg.saveList,
-gg.addListItems,
-gg.prompt,
-gg.setVisible,
-gg.searchNumber,
-gg.saveVariable,
-gg.isPackageInstalled,
-gg.numberToLocale,
-gg.clearList,
-gg.copyMemory,
-gg.hideUiButton,
-gg.sleep,
-gg.loadList,
-gg.isClickedUiButton,
-gg.dumpMemory,
-gg.searchAddress,
-math.sqrt,
-math.atan2,
-math.ceil,
-math.tanh,
-math.rad,
-math.abs,
-math.sinh,
-math.atan2,
-math.fmod,
-math.random,
-math.max,
-math.randomseed,
-math.modf,
-math.deg,
-math.exp,
-math.ldexp,
-math.cosh,
-math.ult,
-math.log,
-math.tointeger,
-math.frexp,
-math.asin,
-math.tan,
-math.floor,
-math.pow,
-math.acos,
-math.cos,
-math.type,
-math.min,
-math.sin,
-os.setlocale,
-os.clock,
-os.tmpname,
-os.getenv,
-os.execute,
-os.difftime,
-os.rename,
-os.remove,
-os.time,
-os.date,
-os.popen,
-os.lines,
-os.write,
-os.tmpfile,
-io.open,
-io.close,
-io.input,
-io.read,
-io.output,
-io.flush,
-io.type,
-table.concat,
-table.remove,
-table.sort,
-table.pack,
-table.move,
-table.insert,
-table.unpack,
-string.dump,
-string.reverse,
-string.char,
-string.unpack,
-string.match,
-string.gsub,
-string.find,
-string.pack,
-string.gmatch,
-gg.format,
-string.packsize,
-string.lower,
-string.upper,
-string.rep,
-string.sub,
-string.byte,
-string.len,
-bit32.rshift,
-bit32.bnot,
-bit32.lshift,
-bit32.bxor,
-bit32.btest,
-bit32.extract,
-bit32.lrotate,
-bit32.rrotate,
-bit32.band,
-bit32.replace,
-bit32.bor,
-bit32.arshift,
-utf8.codes,
-utf8.offset,
-utf8.char,
-utf8.codepoint,
-utf8.len,
-debug.getregistry,
-debug.getupvalue,
-debug.getinfo,
-debug.getlocal,
-debug.setlocal,
-debug.setupvalue,
-debug.traceback,
-debug.getmetatable,
-debug.setmetatable,
-debug.debug,
-debug.upvaluejoin,
-debug.sethook,
-debug.gethook,
-debug.upvalueid
+    print,
+    load,
+    pcall,
+    load,
+    xcall,
+    dofile,
+    loadfile,
+    error,
+    getmetatable,
+    setmetatable,
+    collectgarbage,
+    tostring,
+    tonumber,
+    package.require,
+    ipairs,
+    rawequal,
+    assert2,
+    rawset,
+    next,
+    select,
+    rawget,
+    assert,
+    type,
+    rawlen,
+    gg.getResultsCount,
+    gg.multiChoice,
+    gg.setSpeed,
+    gg.getSpeed,
+    gg.bytes,
+    gg.getFile,
+    gg.require,
+    gg.getValues,
+    gg.setValues,
+    gg.editAll,
+    gg.getListItems,
+    gg.loadResults,
+    gg.getSelectedResults,
+    gg.getTargetPackage,
+    gg.searchPointer,
+    gg.startFuzzy,
+    gg.processKill,
+    gg.alert,
+    gg.setRanges,
+    gg.getRanges,
+    gg.getLine,
+    gg.unrandomizer,
+    gg.getActiveTab,
+    gg.searchPointer,
+    gg.skipRestoreState,
+    gg.allocatePage,
+    gg.getValuesRange,
+    gg.removeListItems,
+    gg.getTargetInfo,
+    gg.toast,
+    gg.processResume,
+    gg.makeRequest,
+    gg.getLocale,
+    gg.getSelectedListItems,
+    gg.timeJump,
+    gg.processToggle,
+    gg.disasm,
+    gg.getResultsCount,
+    gg.processPause,
+    gg.isProcessPaused,
+    gg.getRangesList,
+    gg.getResults,
+    gg.copyText,
+    gg.searchFuzzy,
+    gg.clearResults,
+    gg.removeResults,
+    gg.refineAddress,
+    gg.refineNumber,
+    gg.choice,
+    gg.numberFromLocale,
+    gg.getSelectedElements,
+    gg.showUiButton,
+    gg.isVisible,
+    gg.gotoAddress,
+    gg.getTargetPackage,
+    gg.saveList,
+    gg.addListItems,
+    gg.prompt,
+    gg.setVisible,
+    gg.searchNumber,
+    gg.saveVariable,
+    gg.isPackageInstalled,
+    gg.numberToLocale,
+    gg.clearList,
+    gg.copyMemory,
+    gg.hideUiButton,
+    gg.sleep,
+    gg.loadList,
+    gg.isClickedUiButton,
+    gg.dumpMemory,
+    gg.searchAddress,
+    math.sqrt,
+    math.atan2,
+    math.ceil,
+    math.tanh,
+    math.rad,
+    math.abs,
+    math.sinh,
+    math.atan2,
+    math.fmod,
+    math.random,
+    math.max,
+    math.randomseed,
+    math.modf,
+    math.deg,
+    math.exp,
+    math.ldexp,
+    math.cosh,
+    math.ult,
+    math.log,
+    math.tointeger,
+    math.frexp,
+    math.asin,
+    math.tan,
+    math.floor,
+    math.pow,
+    math.acos,
+    math.cos,
+    math.type,
+    math.min,
+    math.sin,
+    os.setlocale,
+    os.clock,
+    os.tmpname,
+    os.getenv,
+    os.execute,
+    os.difftime,
+    os.rename,
+    os.remove,
+    os.time,
+    os.date,
+    os.popen,
+    os.lines,
+    os.write,
+    os.tmpfile,
+    io.open,
+    io.close,
+    io.input,
+    io.read,
+    io.output,
+    io.flush,
+    io.type,
+    table.concat,
+    table.remove,
+    table.sort,
+    table.pack,
+    table.move,
+    table.insert,
+    table.unpack,
+    string.dump,
+    string.reverse,
+    string.char,
+    string.unpack,
+    string.match,
+    string.gsub,
+    string.find,
+    string.pack,
+    string.gmatch,
+    gg.format,
+    string.packsize,
+    string.lower,
+    string.upper,
+    string.rep,
+    string.sub,
+    string.byte,
+    string.len,
+    bit32.rshift,
+    bit32.bnot,
+    bit32.lshift,
+    bit32.bxor,
+    bit32.btest,
+    bit32.extract,
+    bit32.lrotate,
+    bit32.rrotate,
+    bit32.band,
+    bit32.replace,
+    bit32.bor,
+    bit32.arshift,
+    utf8.codes,
+    utf8.offset,
+    utf8.char,
+    utf8.codepoint,
+    utf8.len,
+    debug.getregistry,
+    debug.getupvalue,
+    debug.getinfo,
+    debug.getlocal,
+    debug.setlocal,
+    debug.setupvalue,
+    debug.traceback,
+    debug.getmetatable,
+    debug.setmetatable,
+    debug.debug,
+    debug.upvaluejoin,
+    debug.sethook,
+    debug.gethook,
+    debug.upvalueid
 }
 --====随机字符串生成====--
-RandomString = function (n)
+local RandomString = function (n)
     local Random = {
         "a",
         "b",
@@ -275,7 +275,6 @@ RandomString = function (n)
 end
 --====String替换配置====--
 _GsubTable_ = {
---====数字替换====--
     {"1","$⁰"},
     {"2","$⁹"},
     {"3","$⁸"},
@@ -286,7 +285,6 @@ _GsubTable_ = {
     {"8","$³"},
     {"9","$²"},
     {"0","$¹"},
---====小写字母替换====--
     {"a","め26"},
     {"b","め25"},
     {"c","め24"},
@@ -313,7 +311,6 @@ _GsubTable_ = {
     {"x","め3"},
     {"y","め2"},
     {"z","め1"},
---====大写字母替换====--
     {"A","ㄖ26"},
     {"B","ㄖ25"},
     {"C","ㄖ24"},
@@ -342,7 +339,7 @@ _GsubTable_ = {
     {"Z","ㄖ1"}
 }
 --====MSE配置====--
-function MSE(String)
+local function MSE(String)
     local _V_ = 100
     local function MD5(strss) local HexTable = {"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"} local A = 0x67452301 local B = 0xefcdab89 local C = 0x98badcfe local D = 0x10325476 local S11 = 7 local S12 = 12 local S13 = 17 local S14 = 22 local S21 = 5 local S22 = 9 local S23 = 14 local S24 = 20 local S31 = 4 local S32 = 11 local S33 = 16 local S34 = 23 local S41 = 6 local S42 = 10 local S43 = 15 local S44 = 21 local function F(x,y,z) return (x & y) | ((~x) & z) end local function G(x,y,z) return (x & z) | (y & (~z)) end local function H(x,y,z) return x ~ y ~ z end local function I(x,y,z) return y ~ (x | (~z)) end local function FF(a,b,c,d,x,s,ac) a = a + F(b,c,d) + x + ac a = (((a & 0xffffffff) << s) | ((a & 0xffffffff) >> 32 - s)) + b return a & 0xffffffff end local function GG(a,b,c,d,x,s,ac) a = a + G(b,c,d) + x + ac a = (((a & 0xffffffff) << s) | ((a & 0xffffffff) >> 32 - s)) + b return a & 0xffffffff end local function HH(a,b,c,d,x,s,ac) a = a + H(b,c,d) + x + ac a = (((a & 0xffffffff) << s) | ((a & 0xffffffff) >> 32 - s)) + b return a & 0xffffffff end local function II(a,b,c,d,x,s,ac) a = a + I(b,c,d) + x + ac a = (((a & 0xffffffff) << s) | ((a & 0xffffffff) >> 32 - s)) + b return a & 0xffffffff end local function MD5StringFill(s) local len = #s local mod512 = len * 8 % 512 local fillSize = (448 - mod512) // 8 if mod512 > 448 then fillSize = (960 - mod512) // 8 end local rTab = {} local byteIndex = 1 for i = 1,len do local index = (i - 1) // 4 + 1 rTab[index] = rTab[index] or 0 rTab[index] = rTab[index] | (s:byte(i) << (byteIndex - 1) * 8) byteIndex = byteIndex + 1 if byteIndex == 5 then byteIndex = 1 end end local b0x80 = false local tLen = #rTab if byteIndex ~= 1 then rTab[tLen] = rTab[tLen] | 0x80 << (byteIndex - 1) * 8 b0x80 = true end for i = 1,fillSize // 4 do if not b0x80 and i == 1 then rTab[tLen + i] = 0x80 else rTab[tLen + i] = 0x0 end end local bitLen = math.floor(len * 8) tLen = #rTab rTab[tLen + 1] = bitLen & 0xffffffff rTab[tLen + 2] = bitLen >> 32 return rTab end string.md5 = function(s) local fillTab = MD5StringFill(s) local result = {A,B,C,D} for i = 1,#fillTab // 16 do local a = result[1] local b = result[2] local c = result[3] local d = result[4] local offset = (i - 1) * 16 + 1 a = FF(a, b, c, d, fillTab[offset + 0], S11, 0xd76aa478) d = FF(d, a, b, c, fillTab[offset + 1], S12, 0xe8c7b756) c = FF(c, d, a, b, fillTab[offset + 2], S13, 0x242070db) b = FF(b, c, d, a, fillTab[offset + 3], S14, 0xc1bdceee) a = FF(a, b, c, d, fillTab[offset + 4], S11, 0xf57c0faf) d = FF(d, a, b, c, fillTab[offset + 5], S12, 0x4787c62a) c = FF(c, d, a, b, fillTab[offset + 6], S13, 0xa8304613) b = FF(b, c, d, a, fillTab[offset + 7], S14, 0xfd469501) a = FF(a, b, c, d, fillTab[offset + 8], S11, 0x698098d8) d = FF(d, a, b, c, fillTab[offset + 9], S12, 0x8b44f7af) c = FF(c, d, a, b, fillTab[offset + 10], S13, 0xffff5bb1) b = FF(b, c, d, a, fillTab[offset + 11], S14, 0x895cd7be) a = FF(a, b, c, d, fillTab[offset + 12], S11, 0x6b901122) d = FF(d, a, b, c, fillTab[offset + 13], S12, 0xfd987193) c = FF(c, d, a, b, fillTab[offset + 14], S13, 0xa679438e) b = FF(b, c, d, a, fillTab[offset + 15], S14, 0x49b40821) a = GG(a, b, c, d, fillTab[offset + 1], S21, 0xf61e2562) d = GG(d, a, b, c, fillTab[offset + 6], S22, 0xc040b340) c = GG(c, d, a, b, fillTab[offset + 11], S23, 0x265e5a51) b = GG(b, c, d, a, fillTab[offset + 0], S24, 0xe9b6c7aa) a = GG(a, b, c, d, fillTab[offset + 5], S21, 0xd62f105d) d = GG(d, a, b, c, fillTab[offset + 10], S22, 0x2441453) c = GG(c, d, a, b, fillTab[offset + 15], S23, 0xd8a1e681) b = GG(b, c, d, a, fillTab[offset + 4], S24, 0xe7d3fbc8) a = GG(a, b, c, d, fillTab[offset + 9], S21, 0x21e1cde6) d = GG(d, a, b, c, fillTab[offset + 14], S22, 0xc33707d6) c = GG(c, d, a, b, fillTab[offset + 3], S23, 0xf4d50d87) b = GG(b, c, d, a, fillTab[offset + 8], S24, 0x455a14ed) a = GG(a, b, c, d, fillTab[offset + 13], S21, 0xa9e3e905) d = GG(d, a, b, c, fillTab[offset + 2], S22, 0xfcefa3f8) c = GG(c, d, a, b, fillTab[offset + 7], S23, 0x676f02d9) b = GG(b, c, d, a, fillTab[offset + 12], S24, 0x8d2a4c8a) a = HH(a, b, c, d, fillTab[offset + 5], S31, 0xfffa3942) d = HH(d, a, b, c, fillTab[offset + 8], S32, 0x8771f681) c = HH(c, d, a, b, fillTab[offset + 11], S33, 0x6d9d6122) b = HH(b, c, d, a, fillTab[offset + 14], S34, 0xfde5380c) a = HH(a, b, c, d, fillTab[offset + 1], S31, 0xa4beea44) d = HH(d, a, b, c, fillTab[offset + 4], S32, 0x4bdecfa9) c = HH(c, d, a, b, fillTab[offset + 7], S33, 0xf6bb4b60) b = HH(b, c, d, a, fillTab[offset + 10], S34, 0xbebfbc70) a = HH(a, b, c, d, fillTab[offset + 13], S31, 0x289b7ec6) d = HH(d, a, b, c, fillTab[offset + 0], S32, 0xeaa127fa) c = HH(c, d, a, b, fillTab[offset + 3], S33, 0xd4ef3085) b = HH(b, c, d, a, fillTab[offset + 6], S34, 0x4881d05) a = HH(a, b, c, d, fillTab[offset + 9], S31, 0xd9d4d039) d = HH(d, a, b, c, fillTab[offset + 12], S32, 0xe6db99e5) c = HH(c, d, a, b, fillTab[offset + 15], S33, 0x1fa27cf8) b = HH(b, c, d, a, fillTab[offset + 2], S34, 0xc4ac5665) a = II(a, b, c, d, fillTab[offset + 0], S41, 0xf4292244) d = II(d, a, b, c, fillTab[offset + 7], S42, 0x432aff97) c = II(c, d, a, b, fillTab[offset + 14], S43, 0xab9423a7) b = II(b, c, d, a, fillTab[offset + 5], S44, 0xfc93a039) a = II(a, b, c, d, fillTab[offset + 12], S41, 0x655b59c3) d = II(d, a, b, c, fillTab[offset + 3], S42, 0x8f0ccc92) c = II(c, d, a, b, fillTab[offset + 10], S43, 0xffeff47d) b = II(b, c, d, a, fillTab[offset + 1], S44, 0x85845dd1) a = II(a, b, c, d, fillTab[offset + 8], S41, 0x6fa87e4f) d = II(d, a, b, c, fillTab[offset + 15], S42, 0xfe2ce6e0) c = II(c, d, a, b, fillTab[offset + 6], S43, 0xa3014314) b = II(b, c, d, a, fillTab[offset + 13], S44, 0x4e0811a1) a = II(a, b, c, d, fillTab[offset + 4], S41, 0xf7537e82) d = II(d, a, b, c, fillTab[offset + 11], S42, 0xbd3af235) c = II(c, d, a, b, fillTab[offset + 2], S43, 0x2ad7d2bb) b = II(b, c, d, a, fillTab[offset + 9], S44, 0xeb86d391) result[1] = result[1] + a result[2] = result[2] + b result[3] = result[3] + c result[4] = result[4] + d result[1] = result[1] & 0xffffffff result[2] = result[2] & 0xffffffff result[3] = result[3] & 0xffffffff result[4] = result[4] & 0xffffffff end local retStr = "" for i = 1,4 do for _ = 1,4 do local temp = result[i] & 0x0F local str = HexTable[temp + 1] result[i] = result[i] >> 4 temp = result[i] & 0x0F retStr = retStr .. HexTable[temp + 1] .. str result[i] = result[i] >> 4 end end return retStr end return string.md5(strss) end
     local i = 1
@@ -362,7 +359,7 @@ function MSE(String)
     return String
 end
 
-StringEnc2 = function (Str)
+local StringEnc2 = function (Str)
     local StrTable = {string.byte(Str,1,-1)}
     local Str = table.concat(StrTable,",")
     return "string.char("..Str..")"
@@ -446,7 +443,7 @@ function Main()
 end
 
 function Select()
-    ScriptFile = gg.prompt({"请选择需要加密的脚本"},{ScriptFileLog},{"file"})
+    ScriptFile = gg.prompt({"请选择需要加密的脚本"},{ScriptFileLog},{file})
     if ScriptFile == nil then Select() end
     ScriptFile = ScriptFile[1]
     if io.open(ScriptFile) == nil then gg.alert("文件不存在,请重新选择") Select() end
@@ -506,37 +503,37 @@ function Start()
         "tonumber",
     }
     function FuncTo_ENV(Lib)
-        for w in Code:gmatch("%s"..Lib.."%.(%w+)%(") do
+        for w in Code:gmatch("%s"..Lib.."%s*%.%s*(%w+)%(") do
             Code = Code:gsub(Lib.."%."..w,"_ENV[\""..Lib.."\"][\""..w.."\"]")
         end
-        for w in Code:gmatch(";"..Lib.."%.(%w+)%(") do
+        for w in Code:gmatch(";"..Lib.."%s*%.%s*(%w+)%(") do
             Code = Code:gsub(Lib.."%."..w,"_ENV[\""..Lib.."\"][\""..w.."\"]")
         end
-        for w in Code:gmatch("%)"..Lib.."%.(%w+)%(") do
+        for w in Code:gmatch("%)"..Lib.."%s*%.%s*(%w+)%(") do
             Code = Code:gsub(Lib.."%."..w,"_ENV[\""..Lib.."\"][\""..w.."\"]")
         end
-        for w in Code:gmatch("\""..Lib.."%.(%w+)%(") do
+        for w in Code:gmatch("\""..Lib.."%s*%.%s*(%w+)%(") do
             Code = Code:gsub(Lib.."%."..w,"_ENV[\""..Lib.."\"][\""..w.."\"]")
         end
-        for w in Code:gmatch("\'"..Lib.."%.(%w+)%(") do
+        for w in Code:gmatch("\'"..Lib.."%s*%.%s*(%w+)%(") do
             Code = Code:gsub(Lib.."%."..w,"_ENV[\""..Lib.."\"][\""..w.."\"]")
         end
-        for w in Code:gmatch("%s"..Lib.."%.(%w+)\"") do
+        for w in Code:gmatch("%s"..Lib.."%s*%.%s*(%w+)\"") do
             Code = Code:gsub(Lib.."%."..w,"_ENV[\""..Lib.."\"][\""..w.."\"]")
         end
-        for w in Code:gmatch("%s"..Lib.."%.(%w+)\'") do
+        for w in Code:gmatch("%s"..Lib.."%s*%.%s*(%w+)\'") do
             Code = Code:gsub(Lib.."%."..w,"_ENV[\""..Lib.."\"][\""..w.."\"]")
         end
-        for w in Code:gmatch(";"..Lib.."%.(%w+)%(") do
+        for w in Code:gmatch(";"..Lib.."%s*%.%s*(%w+)%(") do
             Code = Code:gsub(Lib.."%."..w,"_ENV[\""..Lib.."\"][\""..w.."\"]")
         end
-        for w in Code:gmatch("%)"..Lib.."%.(%w+)%(") do
+        for w in Code:gmatch("%)"..Lib.."%s*%.%s*(%w+)%(") do
             Code = Code:gsub(Lib.."%."..w,"_ENV[\""..Lib.."\"][\""..w.."\"]")
         end
-        for w in Code:gmatch("\""..Lib.."%.(%w+)%(") do
+        for w in Code:gmatch("\""..Lib.."%s*%.%s*(%w+)%(") do
             Code = Code:gsub(Lib.."%."..w,"_ENV[\""..Lib.."\"][\""..w.."\"]")
         end
-        for w in Code:gmatch("\'"..Lib.."%.(%w+)%(") do
+        for w in Code:gmatch("\'"..Lib.."%s*%.%s*(%w+)%(") do
             Code = Code:gsub(Lib.."%."..w,"_ENV[\""..Lib.."\"][\""..w.."\"]")
         end
     end
@@ -680,8 +677,8 @@ function Start()
     --====环境检测====--
     if Set10 == "开" then
         CodeBak = Code
-        local F = gg.alert("是否写入修改器验证","是","","否")
-        if F == 1 then
+        local C = gg.alert("是否写入修改器验证","是","","否")
+        if C == 1 then
             ::APK::
             local APK = gg.prompt({"请输入修改器的包名列表"},{Pkg},{text})
             if APK == nil or APK[1] == "" then
@@ -752,7 +749,7 @@ function Start()
     --===反Dec====--
     if Set4 == "开" then
         CodeBak = Code
-        local Lasm = gg.prompt({"请输入垃圾刷入量[10000;200000]"},{20000},{"number"})
+        local Lasm = gg.prompt({"请输入垃圾刷入量[10000;200000]"},{20000},{number})
         if Lasm == nil then Start() end
         local Str = RandomString(Lasm[1])
         ::RandomDec::
@@ -903,9 +900,14 @@ function Start()
     --====替换编译头====--
     ::OutDumpHead::
     CodeBak = Code
-    local DumpHead = gg.prompt({"请输入输出文件的编译头"},{"LuaR"},{"text"})
-    if DumpHead == nil then goto OutDumpHead end
-    if DumpHead[1] == nil then gg.alert("编译头不能为空") goto OutDumpHead end
+    local DumpHead = gg.prompt({"请输入输出文件的编译头"},{"LuaR"},{text})
+    if DumpHead == nil then
+        goto OutDumpHead
+    end
+    if DumpHead[1] == nil then
+        gg.alert("编译头不能为空")
+        goto OutDumpHead
+    end
     Code = Code:gsub("LuaR",DumpHead[1])
     local a,b = load(Code)
     if a == nil then
@@ -919,7 +921,7 @@ function Start()
         Main()
     else
         ::Out::
-        local Out = gg.prompt({"请输入输出文件名","请选择文件输出路径","请输入文件输出后缀(默认为.lua,输入nil为无后缀输出)"},{ScriptFile:match("[^/]*$"):gsub("%.lua","[加密]"),OutFileLog,".lua"},{"text","path","text"})
+        local Out = gg.prompt({"请输入输出文件名","请选择文件输出路径","请输入文件输出后缀(默认为.lua,输入nil为无后缀输出)"},{ScriptFile:match("[^/]*$"):gsub("%.lua","[加密]"),OutFileLog,".lua"},{text,path,text})
         if Out == nil then goto Out end
         if Out[2] == "" then
             gg.alert("输出路径为空")
@@ -934,9 +936,57 @@ function Start()
             goto EncEnd
         end
         Code = io.open(Out[2].."/"..Out[1]..Out[3],"r"):read("*a")
-        
-        Code = Code
-        Instruction = {"MOVE","LOADK","LOADKX","LOADBOOL","LOADNIL","GETUPVAL","GETTABUP","GETTABLE","SETTABUP","SETUPVAL","SETTABLE","NEWTABLE","SELF","ADD","SUB","MUL","DIV","MOD","POW","UNM","NOT","LEN","CONCAT","JMP","EQ","LT","LE","TEST","TESTSET","CALL","TAILCALL","RETURN","FORLOOP","FORPREP","TFORCALL","TFORLOOP","SETLIST","CLOSURE","VARARG","EXTRAARG","IDIV","BNOT","BAND","BOR","BXOR","SHL","SHR","RETURN","%.local "}
+        Instruction = {
+            "MOVE",
+            "LOADK",
+            "LOADKX",
+            "LOADBOOL",
+            "LOADNIL",
+            "GETUPVAL",
+            "GETTABUP",
+            "GETTABLE",
+            "SETTABUP",
+            "SETUPVAL",
+            "SETTABLE",
+            "NEWTABLE",
+            "SELF",
+            "ADD",
+            "SUB",
+            "MUL",
+            "DIV",
+            "MOD",
+            "POW",
+            "UNM",
+            "NOT",
+            "LEN",
+            "CONCAT",
+            "JMP",
+            "EQ",
+            "LT",
+            "LE",
+            "TEST",
+            "TESTSET",
+            "CALL",
+            "TAILCALL",
+            "RETURN",
+            "FORLOOP",
+            "FORPREP",
+            "TFORCALL",
+            "TFORLOOP",
+            "SETLIST",
+            "CLOSURE",
+            "VARARG",
+            "EXTRAARG",
+            "IDIV",
+            "BNOT",
+            "BAND",
+            "BOR",
+            "BXOR",
+            "SHL",
+            "SHR",
+            "RETURN",
+            "%.local "
+        }
         Tab_H = {}
         Tab_i = {}
         Upvalue = 0
@@ -957,36 +1007,41 @@ function Start()
             end
             return tRet
         end
-        for i in string.gmatch(Code,"(.-)\n") do
+        for i in Code:gmatch("(.-)\n") do
             if Upvalue == 0 and End == 0 then
                 table.insert(Tab_H,i)
-                if string.match(i,"upval v") ~= nil then
+                if i:match("upval v") ~= nil then
                     Upvalue = 1
-                    table.insert(Tab_H,"\n替换专用\n")
+                    ::Str::
+                    _Str_ = RandomString(30)
+                    if Code:find(_Str_) ~= nil then
+                        goto Str
+                    end
+                    table.insert(Tab_H,"\n".._Str_.."\n")
                 end
-                if string.match(i,"RETURN") ~= nil then
+                if i:match("RETURN") ~= nil then
                     Upvalue = 0
                 end
             else
                 local i2 = i:gsub(" ","")
-                local Jiequ = string.sub(i2,1,4)
-                if string.find(tostring(Instruction),Jiequ) ~= nil then
-                    if string.find(i,"v") or string.find(i,"u") or string.find(i,"RETURN") ~= nil then
+                local intercept = string.sub(i2,1,4)
+                if tostring(Instruction):find(intercept) ~= nil then
+                    if i:find("v") or i:find("u") or i:find("RETURN") ~= nil then
                         n = n + 1
                         if Goto == 0 then
                             Goto = 1
                             if #R_Goto == 0 then
                                 if n == 1 then
-                                    local Firstsuiji = math.random(1,999999)
-                                    table.insert(FirstGoto,Firstsuiji)
-                                    table.insert(R_Goto,Firstsuiji)
+                                    local FirstRandom = math.random(1,999999)
+                                    table.insert(FirstGoto,FirstRandom)
+                                    table.insert(R_Goto,FirstRandom)
                                 else
                                     table.insert(R_Goto,math.random(1,999999))
                                 end
                             end
                             table.remove(R_Goto2,1)
                             table.insert(R_Goto2,math.random(1,999999))
-                            if string.find(i,"RETURN") == nil then
+                            if i:find("RETURN") == nil then
                                 table.insert(Tab_i,"\n:goto_"..R_Goto[1].."\n"..i.."\n\nJMP :goto_"..R_Goto2[1].."\n")
                             else
                                 table.insert(Tab_i,"\n:goto_"..R_Goto[1].."\n"..i.."\n\n")
@@ -994,23 +1049,23 @@ function Start()
                         else
                             table.remove(R_Goto,1)
                             table.insert(R_Goto,1,math.random(1,999999))
-                            Goto = 0    
-                            if string.find(i,"RETURN") == nil then         
+                            Goto = 0
+                            if i:find("RETURN") == nil then
                                 table.insert(Tab_i,"\n:goto_"..R_Goto2[1].."\n"..i.."\n\nJMP :goto_"..R_Goto[1].."\n")
                             else
                                 table.insert(Tab_i,"\n:goto_"..R_Goto2[1].."\n"..i.."\n\n")
                             end
-                        end  
+                        end
                     end
                 else
-                    if string.find(i,"%.line ") == nil then
+                    if i:find("%.line ") == nil then
                         table.insert(Tab_H,i)
                     end
                 end
             end
         end
         Code = table.concat(Tab_H,"\n")
-        :gsub("替换专用","\nJMP :goto_"..FirstGoto[1].."\n"..table.concat(Table_Rand(Tab_i)))
+        :gsub(_Str_,"\nJMP :goto_"..FirstGoto[1].."\n"..table.concat(Table_Rand(Tab_i)))
         :gsub("maxstacksize [^\n]+","maxstacksize 250")
         :gsub("linedefined [^\n]+","linedefined 0")
         :gsub("lastlinedefined [^\n]+","lastlinedefined 0")
@@ -1021,13 +1076,14 @@ function Start()
         ::EncEnd::
         local a,b = load(Code)
         if a == nil then
+            gg.alert("字节码混淆错误")
             Code = CodeBak
         else
             Code = string.dump(load(Code),true)
         end
         io.open(Out[2].."/"..Out[1]..Out[3],"w+"):write(Code)
-        local F = gg.alert("加密成功\n\n📂输出位置:"..Out[2].."/"..Out[1]..Out[3],"返回主页","","退出加密")
-        if F == 1 then Main() else Exit() end
+        local C = gg.alert("加密成功\n\n📂输出位置:"..Out[2].."/"..Out[1]..Out[3],"返回主页","","退出加密")
+        if C == 1 then Main() else Exit() end
         Code,CodeBak,FuncTab = nil
         Main()
     end
@@ -1035,17 +1091,17 @@ end
 
 function Set()
     local Menu = gg.choice({
-    "写入Logo["..Set1.."]",
-    "Bool混淆["..Set2.."]",
-    "Nil混淆["..Set3.."]",
-    "反Dec["..Set4.."]",
-    "反Log["..Set5.."]",
-    "防函数重写["..Set6.."]",
-    "内置函数加密["..Set7.."]",
-    "自定义函数加密["..Set8.."]",
-    "防抓包["..Set9.."]",
-    "环境检测["..Set10.."]",
-    "返回主页"
+        "写入Logo["..Set1.."]",
+        "Bool混淆["..Set2.."]",
+        "Nil混淆["..Set3.."]",
+        "反Dec["..Set4.."]",
+        "反Log["..Set5.."]",
+        "防函数重写["..Set6.."]",
+        "内置函数加密["..Set7.."]",
+        "自定义函数加密["..Set8.."]",
+        "防抓包["..Set9.."]",
+        "环境检测["..Set10.."]",
+        "返回主页"
     },nil,"Storm-Lua-Enc Pro\n雨后总有彩虹🌈深夜总有繁星✨\n加密脚本:"..ScriptFile)
     if Menu == nil then Main() end
     if Menu == 1 then if Set1 == "开" then Set1 = "关" else Set1 = "开" end Set() end
@@ -1071,7 +1127,7 @@ function Exit()
         os.exit(print("Storm-Lua-Enc Pro\n为您的代码保驾护航"))
     end
 end
-Code,CodeBak,FuncTab = nil
+Code,CodeBak = nil
 Main()
 while true do
     local LogTable = {ScriptFileLog,"\n"..OutFileLog,"\n"..Set1,"\n"..Set2,"\n"..Set3,"\n"..Set4,"\n"..Set5,"\n"..Set6,"\n"..Set7,"\n"..Set8,"\n"..Set9,"\n"..Set10,"\n"..Pkg}
