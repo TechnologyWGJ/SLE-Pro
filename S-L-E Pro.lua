@@ -361,10 +361,7 @@ function MSE(String)
     end
     return String
 end
---====定义字符串清理函数====--
-string.remove = function (String)
-    return true
-end
+
 StringEnc2 = function (Str)
     local StrTable = {string.byte(Str,1,-1)}
     local Str = table.concat(StrTable,",")
@@ -465,15 +462,6 @@ function Select()
 end
 
 function Start()
-    A = nil
-    B = nil
-    C = nil
-    D = nil
-    E = nil
-    F = nil
-    G = nil
-    H = nil
-    I = nil
     FuncTab = nil
     if not Code then
         gg.alert("您还未选择脚本")
@@ -505,19 +493,53 @@ function Start()
     :gsub("%[=*%[(.-)%]=*%]",StringEnc)
     local a,b = load(Code)
     if a == nil then
-        StrEnc = false
         gg.alert("字符串加密错误")
         Code = CodeBak
     end
     --====内置函数加密====--
     CodeBak = Code
-    FuncTab = {
+    local FuncTab = {
         "print",
         "load",
         "type",
         "tostring",
         "tonumber",
     }
+    function FuncTo_ENV(Lib)
+        for w in Code:gmatch("%s"..Lib.."%.(%w+)%(") do
+            Code = Code:gsub(Lib.."%."..w,"_ENV[\""..Lib.."\"][\""..w.."\"]")
+        end
+        for w in Code:gmatch(";"..Lib.."%.(%w+)%(") do
+            Code = Code:gsub(Lib.."%."..w,"_ENV[\""..Lib.."\"][\""..w.."\"]")
+        end
+        for w in Code:gmatch("%)"..Lib.."%.(%w+)%(") do
+            Code = Code:gsub(Lib.."%."..w,"_ENV[\""..Lib.."\"][\""..w.."\"]")
+        end
+        for w in Code:gmatch("\""..Lib.."%.(%w+)%(") do
+            Code = Code:gsub(Lib.."%."..w,"_ENV[\""..Lib.."\"][\""..w.."\"]")
+        end
+        for w in Code:gmatch("\'"..Lib.."%.(%w+)%(") do
+            Code = Code:gsub(Lib.."%."..w,"_ENV[\""..Lib.."\"][\""..w.."\"]")
+        end
+        for w in Code:gmatch("%s"..Lib.."%.(%w+)\"") do
+            Code = Code:gsub(Lib.."%."..w,"_ENV[\""..Lib.."\"][\""..w.."\"]")
+        end
+        for w in Code:gmatch("%s"..Lib.."%.(%w+)\'") do
+            Code = Code:gsub(Lib.."%."..w,"_ENV[\""..Lib.."\"][\""..w.."\"]")
+        end
+        for w in Code:gmatch(";"..Lib.."%.(%w+)%(") do
+            Code = Code:gsub(Lib.."%."..w,"_ENV[\""..Lib.."\"][\""..w.."\"]")
+        end
+        for w in Code:gmatch("%)"..Lib.."%.(%w+)%(") do
+            Code = Code:gsub(Lib.."%."..w,"_ENV[\""..Lib.."\"][\""..w.."\"]")
+        end
+        for w in Code:gmatch("\""..Lib.."%.(%w+)%(") do
+            Code = Code:gsub(Lib.."%."..w,"_ENV[\""..Lib.."\"][\""..w.."\"]")
+        end
+        for w in Code:gmatch("\'"..Lib.."%.(%w+)%(") do
+            Code = Code:gsub(Lib.."%."..w,"_ENV[\""..Lib.."\"][\""..w.."\"]")
+        end
+    end
     for k,v in pairs(FuncTab) do
         Code = Code:gsub("%s"..v.."%("," _ENV[\""..v.."\"](")
         for w in Code:gmatch("%[\"(.-)\"%]") do
@@ -572,305 +594,19 @@ function Start()
             Code = Code:gsub("\""..w.."\"",StringEnc(w))
         end
     end
-    for w in Code:gmatch("%sgg%.(%w+)%(") do
-        Code = Code:gsub("gg%."..w,"_ENV[\"gg\"][\""..w.."\"]")
+    local LibTable = {
+        "gg",
+        "table",
+        "string",
+        "debug",
+        "io",
+        "os",
+        "utf8",
+        "bit32"
+    }
+    for k,v in pairs(LibTable) do
+        FuncTo_ENV(v)
     end
-    for w in Code:gmatch(";gg%.(%w+)%(") do
-        Code = Code:gsub("gg%."..w,"_ENV[\"gg\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%)gg%.(%w+)%(") do
-        Code = Code:gsub("gg%."..w,"_ENV[\"gg\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\"gg%.(%w+)%(") do
-        Code = Code:gsub("gg%."..w,"_ENV[\"gg\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\'gg%.(%w+)%(") do
-        Code = Code:gsub("gg%."..w,"_ENV[\"gg\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%sgg%.(%w+)\"") do
-        Code = Code:gsub("gg%."..w,"_ENV[\"gg\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%sgg%.(%w+)\'") do
-        Code = Code:gsub("gg%."..w,"_ENV[\"gg\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch(";gg%.(%w+)%(") do
-        Code = Code:gsub("gg%."..w,"_ENV[\"gg\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%)gg%.(%w+)%(") do
-        Code = Code:gsub("gg%."..w,"_ENV[\"gg\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\"gg%.(%w+)%(") do
-        Code = Code:gsub("gg%."..w,"_ENV[\"gg\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\'gg%.(%w+)%(") do
-        Code = Code:gsub("gg%."..w,"_ENV[\"gg\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%stable%.(%w+)%(") do
-        Code = Code:gsub("table%."..w,"_ENV[\"table\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch(";table%.(%w+)%(") do
-        Code = Code:gsub("table%."..w,"_ENV[\"table\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%)table%.(%w+)%(") do
-        Code = Code:gsub("table%."..w,"_ENV[\"table\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\"table%.(%w+)%(") do
-        Code = Code:gsub("table%."..w,"_ENV[\"table\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\'table%.(%w+)%(") do
-        Code = Code:gsub("table%."..w,"_ENV[\"table\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%stable%.(%w+)\"") do
-        Code = Code:gsub("table%."..w,"_ENV[\"table\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%stable%.(%w+)\'") do
-        Code = Code:gsub("table%."..w,"_ENV[\"table\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch(";table%.(%w+)%(") do
-        Code = Code:gsub("table%."..w,"_ENV[\"table\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%)table%.(%w+)%(") do
-        Code = Code:gsub("table%."..w,"_ENV[\"table\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\"table%.(%w+)%(") do
-        Code = Code:gsub("table%."..w,"_ENV[\"table\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\'table%.(%w+)%(") do
-        Code = Code:gsub("table%."..w,"_ENV[\"table\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%smath%.(%w+)%(") do
-        Code = Code:gsub("math%."..w,"_ENV[\"math\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch(";math%.(%w+)%(") do
-        Code = Code:gsub("math%."..w,"_ENV[\"math\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%)math%.(%w+)%(") do
-        Code = Code:gsub("math%."..w,"_ENV[\"math\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\"math%.(%w+)%(") do
-        Code = Code:gsub("math%."..w,"_ENV[\"math\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\'math%.(%w+)%(") do
-        Code = Code:gsub("math%."..w,"_ENV[\"math\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%smath%.(%w+)\"") do
-        Code = Code:gsub("math%."..w,"_ENV[\"math\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%smath%.(%w+)\'") do
-        Code = Code:gsub("math%."..w,"_ENV[\"math\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch(";math%.(%w+)%(") do
-        Code = Code:gsub("math%."..w,"_ENV[\"math\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%)math%.(%w+)%(") do
-        Code = Code:gsub("math%."..w,"_ENV[\"math\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\"math%.(%w+)%(") do
-        Code = Code:gsub("math%."..w,"_ENV[\"math\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\'math%.(%w+)%(") do
-        Code = Code:gsub("math%."..w,"_ENV[\"math\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%sutf8%.(%w+)%(") do
-        Code = Code:gsub("utf8%."..w,"_ENV[\"utf8\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch(";utf8%.(%w+)%(") do
-        Code = Code:gsub("utf8%."..w,"_ENV[\"utf8\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%)utf8%.(%w+)%(") do
-        Code = Code:gsub("utf8%."..w,"_ENV[\"utf8\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\"utf8%.(%w+)%(") do
-        Code = Code:gsub("utf8%."..w,"_ENV[\"utf8\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\'utf8%.(%w+)%(") do
-        Code = Code:gsub("utf8%."..w,"_ENV[\"utf8\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%sutf8%.(%w+)\"") do
-        Code = Code:gsub("utf8%."..w,"_ENV[\"utf8\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%sutf8%.(%w+)\'") do
-        Code = Code:gsub("utf8%."..w,"_ENV[\"utf8\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch(";utf8%.(%w+)%(") do
-        Code = Code:gsub("utf8%."..w,"_ENV[\"utf8\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%)utf8%.(%w+)%(") do
-        Code = Code:gsub("utf8%."..w,"_ENV[\"utf8\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\"utf8%.(%w+)%(") do
-        Code = Code:gsub("utf8%."..w,"_ENV[\"utf8\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\'utf8%.(%w+)%(") do
-        Code = Code:gsub("utf8%."..w,"_ENV[\"utf8\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%sio%.(%w+)%(") do
-        Code = Code:gsub("io%."..w,"_ENV[\"io\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch(";io%.(%w+)%(") do
-        Code = Code:gsub("io%."..w,"_ENV[\"io\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%)io%.(%w+)%(") do
-        Code = Code:gsub("io%."..w,"_ENV[\"io\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\"io%.(%w+)%(") do
-        Code = Code:gsub("io%."..w,"_ENV[\"io\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\'io%.(%w+)%(") do
-        Code = Code:gsub("io%."..w,"_ENV[\"io\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%sio%.(%w+)\"") do
-        Code = Code:gsub("io%."..w,"_ENV[\"io\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%sio%.(%w+)\'") do
-        Code = Code:gsub("io%."..w,"_ENV[\"io\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch(";io%.(%w+)%(") do
-        Code = Code:gsub("io%."..w,"_ENV[\"io\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%)io%.(%w+)%(") do
-        Code = Code:gsub("io%."..w,"_ENV[\"io\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\"io%.(%w+)%(") do
-        Code = Code:gsub("io%."..w,"_ENV[\"io\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\'io%.(%w+)%(") do
-        Code = Code:gsub("io%."..w,"_ENV[\"io\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%sos%.(%w+)%(") do
-        Code = Code:gsub("os%."..w,"_ENV[\"os\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch(";os%.(%w+)%(") do
-        Code = Code:gsub("os%."..w,"_ENV[\"os\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%)os%.(%w+)%(") do
-        Code = Code:gsub("os%."..w,"_ENV[\"os\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\"os%.(%w+)%(") do
-        Code = Code:gsub("os%."..w,"_ENV[\"os\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\'os%.(%w+)%(") do
-        Code = Code:gsub("os%."..w,"_ENV[\"os\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%sos%.(%w+)\"") do
-        Code = Code:gsub("os%."..w,"_ENV[\"os\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%sos%.(%w+)\'") do
-        Code = Code:gsub("os%."..w,"_ENV[\"os\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch(";os%.(%w+)%(") do
-        Code = Code:gsub("os%."..w,"_ENV[\"os\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%)os%.(%w+)%(") do
-        Code = Code:gsub("os%."..w,"_ENV[\"os\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\"os%.(%w+)%(") do
-        Code = Code:gsub("os%."..w,"_ENV[\"os\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\'os%.(%w+)%(") do
-        Code = Code:gsub("os%."..w,"_ENV[\"os\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%sbit32%.(%w+)%(") do
-        Code = Code:gsub("bit32%."..w,"_ENV[\"bit32\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch(";bit32%.(%w+)%(") do
-        Code = Code:gsub("bit32%."..w,"_ENV[\"bit32\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%)bit32%.(%w+)%(") do
-        Code = Code:gsub("bit32%."..w,"_ENV[\"bit32\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\"bit32%.(%w+)%(") do
-        Code = Code:gsub("bit32%."..w,"_ENV[\"bit32\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\'bit32%.(%w+)%(") do
-        Code = Code:gsub("bit32%."..w,"_ENV[\"bit32\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%sbit32%.(%w+)\"") do
-        Code = Code:gsub("bit32%."..w,"_ENV[\"bit32\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%sbit32%.(%w+)\'") do
-        Code = Code:gsub("bit32%."..w,"_ENV[\"bit32\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch(";bit32%.(%w+)%(") do
-        Code = Code:gsub("bit32%."..w,"_ENV[\"bit32\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%)bit32%.(%w+)%(") do
-        Code = Code:gsub("bit32%."..w,"_ENV[\"bit32\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\"bit32%.(%w+)%(") do
-        Code = Code:gsub("bit32%."..w,"_ENV[\"bit32\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\'bit32%.(%w+)%(") do
-        Code = Code:gsub("bit32%."..w,"_ENV[\"bit32\"][\""..w.."\"]")
-    end
-    
-    for w in Code:gmatch("%sstring%.(%w+)%(") do
-        Code = Code:gsub("string%."..w,"_ENV[\"string\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch(";string%.(%w+)%(") do
-        Code = Code:gsub("string%."..w,"_ENV[\"string\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%)string%.(%w+)%(") do
-        Code = Code:gsub("string%."..w,"_ENV[\"string\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\"string%.(%w+)%(") do
-        Code = Code:gsub("string%."..w,"_ENV[\"string\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\'string%.(%w+)%(") do
-        Code = Code:gsub("string%."..w,"_ENV[\"string\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%sstring%.(%w+)\"") do
-        Code = Code:gsub("string%."..w,"_ENV[\"string\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%sstring%.(%w+)\'") do
-        Code = Code:gsub("string%."..w,"_ENV[\"string\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch(";string%.(%w+)%(") do
-        Code = Code:gsub("string%."..w,"_ENV[\"string\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%)string%.(%w+)%(") do
-        Code = Code:gsub("string%."..w,"_ENV[\"string\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\"string%.(%w+)%(") do
-        Code = Code:gsub("string%."..w,"_ENV[\"string\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\'string%.(%w+)%(") do
-        Code = Code:gsub("string%."..w,"_ENV[\"string\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%sdebug%.(%w+)%(") do
-        Code = Code:gsub("debug%."..w,"_ENV[\"debug\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch(";debug%.(%w+)%(") do
-        Code = Code:gsub("debug%."..w,"_ENV[\"debug\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%)debug%.(%w+)%(") do
-        Code = Code:gsub("debug%."..w,"_ENV[\"debug\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\"debug%.(%w+)%(") do
-        Code = Code:gsub("debug%."..w,"_ENV[\"debug\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\'debug%.(%w+)%(") do
-        Code = Code:gsub("debug%."..w,"_ENV[\"debug\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%sdebug%.(%w+)\"") do
-        Code = Code:gsub("debug%."..w,"_ENV[\"debug\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%sdebug%.(%w+)\'") do
-        Code = Code:gsub("debug%."..w,"_ENV[\"debug\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch(";debug%.(%w+)%(") do
-        Code = Code:gsub("debug%."..w,"_ENV[\"debug\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("%)debug%.(%w+)%(") do
-        Code = Code:gsub("debug%."..w,"_ENV[\"debug\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\"debug%.(%w+)%(") do
-        Code = Code:gsub("debug%."..w,"_ENV[\"debug\"][\""..w.."\"]")
-    end
-    for w in Code:gmatch("\'debug%.(%w+)%(") do
-        Code = Code:gsub("debug%."..w,"_ENV[\"debug\"][\""..w.."\"]")
-    end
-    FuncTab = nil
     local a,b = load(Code)
     if a == nil then
         gg.alert("内置函数加密错误")
@@ -883,7 +619,8 @@ function Start()
             if w:find("%.") ~= nil then
                 goto FuncEncEnd
             end
-            Code = Code:gsub("function"..w.."%(","_ENV["..StringEnc(w:gsub("%s","")).."] = function (")
+            Code = Code
+            :gsub("function"..w.."%(","_ENV["..StringEnc(w:gsub("%s","")).."] = function (")
         end
         ::FuncEncEnd::
         local a,b = load(Code)
@@ -1197,6 +934,83 @@ function Start()
             goto EncEnd
         end
         Code = io.open(Out[2].."/"..Out[1]..Out[3],"r"):read("*a")
+        
+        Code = Code
+        Instruction = {"MOVE","LOADK","LOADKX","LOADBOOL","LOADNIL","GETUPVAL","GETTABUP","GETTABLE","SETTABUP","SETUPVAL","SETTABLE","NEWTABLE","SELF","ADD","SUB","MUL","DIV","MOD","POW","UNM","NOT","LEN","CONCAT","JMP","EQ","LT","LE","TEST","TESTSET","CALL","TAILCALL","RETURN","FORLOOP","FORPREP","TFORCALL","TFORLOOP","SETLIST","CLOSURE","VARARG","EXTRAARG","IDIV","BNOT","BAND","BOR","BXOR","SHL","SHR","RETURN","%.local "}
+        Tab_H = {}
+        Tab_i = {}
+        Upvalue = 0
+        End = 0
+        Goto = 0
+        R_Goto = {}
+        R_Goto2 = {}
+        n = 0
+        FirstGoto = {}
+        function Table_Rand(t)
+            local tRet = {}
+            local Total = #t
+            while Total > 0 do
+                local i = math.random(1,Total)
+                table.insert(tRet,t[i])
+                t[i] = t[Total]
+                Total = Total -1
+            end
+            return tRet
+        end
+        for i in string.gmatch(Code,"(.-)\n") do
+            if Upvalue == 0 and End == 0 then
+                table.insert(Tab_H,i)
+                if string.match(i,"upval v") ~= nil then
+                    Upvalue = 1
+                    table.insert(Tab_H,"\n替换专用\n")
+                end
+                if string.match(i,"RETURN") ~= nil then
+                    Upvalue = 0
+                end
+            else
+                local i2 = i:gsub(" ","")
+                local Jiequ = string.sub(i2,1,4)
+                if string.find(tostring(Instruction),Jiequ) ~= nil then
+                    if string.find(i,"v") or string.find(i,"u") or string.find(i,"RETURN") ~= nil then
+                        n = n + 1
+                        if Goto == 0 then
+                            Goto = 1
+                            if #R_Goto == 0 then
+                                if n == 1 then
+                                    local Firstsuiji = math.random(1,999999)
+                                    table.insert(FirstGoto,Firstsuiji)
+                                    table.insert(R_Goto,Firstsuiji)
+                                else
+                                    table.insert(R_Goto,math.random(1,999999))
+                                end
+                            end
+                            table.remove(R_Goto2,1)
+                            table.insert(R_Goto2,math.random(1,999999))
+                            if string.find(i,"RETURN") == nil then
+                                table.insert(Tab_i,"\n:goto_"..R_Goto[1].."\n"..i.."\n\nJMP :goto_"..R_Goto2[1].."\n")
+                            else
+                                table.insert(Tab_i,"\n:goto_"..R_Goto[1].."\n"..i.."\n\n")
+                            end
+                        else
+                            table.remove(R_Goto,1)
+                            table.insert(R_Goto,1,math.random(1,999999))
+                            Goto = 0    
+                            if string.find(i,"RETURN") == nil then         
+                                table.insert(Tab_i,"\n:goto_"..R_Goto2[1].."\n"..i.."\n\nJMP :goto_"..R_Goto[1].."\n")
+                            else
+                                table.insert(Tab_i,"\n:goto_"..R_Goto2[1].."\n"..i.."\n\n")
+                            end
+                        end  
+                    end
+                else
+                    if string.find(i,"%.line ") == nil then
+                        table.insert(Tab_H,i)
+                    end
+                end
+            end
+        end
+        Code = table.concat(Tab_H,"\n")
+        :gsub("替换专用","\nJMP :goto_"..FirstGoto[1].."\n"..table.concat(Table_Rand(Tab_i)))
         :gsub("maxstacksize [^\n]+","maxstacksize 250")
         :gsub("linedefined [^\n]+","linedefined 0")
         :gsub("lastlinedefined [^\n]+","lastlinedefined 0")
@@ -1212,31 +1026,9 @@ function Start()
             Code = string.dump(load(Code),true)
         end
         io.open(Out[2].."/"..Out[1]..Out[3],"w+"):write(Code)
-        if Set1 == "开" then A = "✔️" else A = "❌" end
-        if Set2 == "开" then B = "✔️" else B = "❌" end
-        if Set3 == "开" then C = "✔️" else C = "❌" end
-        if Set4 == "开" then D = "✔️" else D = "❌" end
-        if Set5 == "开" then E = "✔️" else E = "❌" end
-        if Set6 == "开" then F = "✔️" else F = "❌" end
-        if Set7 == "开" then G = "✔️" else G = "❌" end
-        if Set8 == "开" then H = "✔️" else H = "❌" end
-        if Set9 == "开" then I = "✔️" else I = "❌" end
-        if Set10 == "开" then J = "✔️" else J = "❌" end
-        local F = gg.alert("加密成功\n\n输出位置:"..Out[2].."/"..Out[1]..Out[3].."\n写入Logo:"..A.."\nBool混淆:"..B.."\nNil混淆:"..C.."\n反Dec:"..D.."\n反Log:"..E.."\n防函数重写:"..F.."\n内置函数加密:"..G.."\n自定义函数加密:"..H.."\n防抓包:"..I.."\n环境检测:"..J,"返回主页","","退出加密")
+        local F = gg.alert("加密成功\n\n📂输出位置:"..Out[2].."/"..Out[1]..Out[3],"返回主页","","退出加密")
         if F == 1 then Main() else Exit() end
-        Code = nil
-        CodeBak = nil
-        A = nil
-        B = nil
-        C = nil
-        D = nil
-        E = nil
-        F = nil
-        G = nil
-        H = nil
-        I = nil
-        J = nil
-        FuncTab = nil
+        Code,CodeBak,FuncTab = nil
         Main()
     end
 end
@@ -1279,19 +1071,7 @@ function Exit()
         os.exit(print("Storm-Lua-Enc Pro\n为您的代码保驾护航"))
     end
 end
-Code = nil
-CodeBak = nil
-A = nil
-B = nil
-C = nil
-D = nil
-E = nil
-F = nil
-G = nil
-H = nil
-I = nil
-J = nil
-FuncTab = nil
+Code,CodeBak,FuncTab = nil
 Main()
 while true do
     local LogTable = {ScriptFileLog,"\n"..OutFileLog,"\n"..Set1,"\n"..Set2,"\n"..Set3,"\n"..Set4,"\n"..Set5,"\n"..Set6,"\n"..Set7,"\n"..Set8,"\n"..Set9,"\n"..Set10,"\n"..Pkg}
